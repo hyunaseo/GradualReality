@@ -16,7 +16,15 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-Assets/OpenCVForUnity/Plugins/
+Assets/*
+!Assets/Scripts/
+!Assets/Scripts/**
+!Assets/Prefabs/
+!Assets/Prefabs/**
+!Assets/Materials/
+!Assets/Materials/**
+!Assets/Scenes/
+!Assets/Scenes/**
 # Mono auto generated files
 mono_crash.*
 
