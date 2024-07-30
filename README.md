@@ -2,7 +2,9 @@
 ![Introduction](Figures/1.Introduction.png)
 
 **Authors**: [Hyuna Seo](https://hyunaseo.github.io), Juheon Yi, Rajesh Balan, Youngki Lee 
+
 **Publication**: ACM UIST, Oct 2024
+
 **Paper**: [GradualReality: Enhancing Physical Object Interaction in Virtual Reality via Interaction State-Aware Blending](https://doi.org/10.1145/3654777.3676463)
 
 ## Research project description
