@@ -17,7 +17,6 @@ public class InitLIVE : MonoBehaviour
     [HideInInspector]
     public ZEDRenderingPlane zedRenderingPlane;
 
-    // Start is called before the first frame update
     void Start()
     {
         zedCamera = zedManager.zedCamera;
