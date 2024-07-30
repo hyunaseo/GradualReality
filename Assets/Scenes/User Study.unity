@@ -4773,6 +4773,10 @@ PrefabInstance:
       propertyPath: zedManager
       value: 
       objectReference: {fileID: 4022732985167923384}
+    - target: {fileID: 1352076636195198341, guid: d0733c79c6ea49543b8500f538a2718d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1352076636250532480, guid: d0733c79c6ea49543b8500f538a2718d, type: 3}
       propertyPath: m_RootOrder
       value: 4
