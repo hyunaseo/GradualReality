@@ -60,7 +60,7 @@ There are three camera rigs for GradualRealtiy. Please add them to the scene as 
     <p align="left">
         <img src="Figures/CameraRigs.PNG" alt="Camer rigs in the scene" width="30%" style="float:left; margin-right:30px;">
     </p>
-</detials>
+</details>
 
 ### 2. Hand tracking settings 
 1. Add `Assets/Prefabs/Hand Tracking/Hands` to the scene, and set its rotation as (0, 90, 0). 
