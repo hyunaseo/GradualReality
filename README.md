@@ -23,7 +23,7 @@ We present **GradualReality** system that enables interaction with physical obje
 #### ZED Mini and Leap Motion Setup with HTC Vive Pro 2
 We have attached the ZED Mini and Leap Motion to the HTC VIVE PRO 2 as shown below.
 <p align="left">
-    <img src="Figures/7.DeviceSetup.png" alt="Device Setup" width="18%" style="float:left; margin-right:30px;">
+    <img src="Figures/7.DeviceSetup.png" alt="Device Setup" width="30%" style="float:left; margin-right:30px;">
 </p>
 
 1. Zed Mini
