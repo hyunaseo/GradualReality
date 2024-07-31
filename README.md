@@ -50,7 +50,7 @@ We implemented this project with Unity 2021.3.2f1.
 ## Initial Settings
 
 ### 1. Camera rig settings 
-There are three camera rigs for GradualRealtiy. Please add them to the scene as follows. If you need more detailed explanation about the component settings, please refer to [this](../Camera%20Rigs/README.md).
+There are three camera rigs for GradualRealtiy. Please add them to the scene as follows. If you need more detailed explanation about the component settings, please refer to [this](../Assets/Prefabs/Camera%20Rigs/README.md).
 1. *Main Camera Rig* for Virtual Environment: Add `Assets/Prefabs/Camera Rigs/Main Camera Rig` to the scene, and set its rotation as (0, 90, 0). Make sure to set the *Main Camera Rig* and *all its child game objects* to **inactive** in the scene!
 2. *Zed Camera Rig* to obtain camera feeds: Add `Assets/Prefabs/Camera Rigs/Zed Camera Rig` to the scene. Set the child objects *Frame* to **inactive** in the scene.
 3. *Pass-Through Camera Rig* to obtain render texture for Pass-Through and render it*: Add `Assets/Prefabs/Camera Rigs/Pass-Through Camera Rig` to the scene, and set its rotation as (0, 90, 0). 
