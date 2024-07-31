@@ -54,3 +54,12 @@ There are three camera rigs for GradualRealtiy. Please add them to the scene as 
 1. *Main Camera Rig* for Virtual Environment: Add `Assets/Prefabs/Camera Rigs/Main Camera Rig` to the scene, and set its rotation as (0, 90, 0). Make sure to set the *Main Camera Rig* and *all its child game objects* to **inactive** in the scene!
 2. *Zed Camera Rig* to obtain camera feeds: Add `Assets/Prefabs/Camera Rigs/Zed Camera Rig` to the scene. Set the child objects *Frame* to **inactive** in the scene.
 3. *Pass-Through Camera Rig* to obtain render texture for Pass-Through and render it*: Add `Assets/Prefabs/Camera Rigs/Pass-Through Camera Rig` to the scene, and set its rotation as (0, 90, 0). 
+
+<details>
+    <summary>Camera rigs in the scene</summary>
+    <p align="left">
+        <img src="Figures/CameraRigs.PNG" alt="Camer rigs in the scene" width="30%" style="float:left; margin-right:30px;">
+    </p>
+</detials>
+
+### 2. Hand tracking settings 
