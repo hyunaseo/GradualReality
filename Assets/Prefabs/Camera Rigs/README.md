@@ -6,7 +6,6 @@
         - Rename it to *Main Camera Rig* and rename its child game object Camera to *Main Camera*.
         - Remove or disable all unnecessary components of *Main Camera Rig* (i.e., Mesh Renderer, Steam VR_Play Area).
         - Add a component called *Tracked Pose Driver* to the *Main Camera*. This is for VR tracking; without it, the scene will not change according to head movements during play.
-        - Create an empty object under the *Main Camera* and name it *Leap Motion Offset*. This will be used later for hand tracking settings.
 
     - **Important!** After finishing the setup, make sure to set the *Main Camera Rig* and *all its child game objects* to **inactive** in the scene!
 

@@ -63,3 +63,14 @@ There are three camera rigs for GradualRealtiy. Please add them to the scene as 
 </detials>
 
 ### 2. Hand tracking settings 
+1. Add `Assets/Prefabs/Hand Tracking/Hands` to the scene, and set its rotation as (0, 90, 0). 
+2. Find *Hands* > *XR Leap Provider Manager* > *Service Provider (XR)* game objects in the scene. 
+- Link main camera: For Leap XR Service Provider component's Main Camera, add *Main Camera Rig* > *Main Camera* game object in the scene. 
+- Modify hand tracking offset: Since the Leap Motion is attached below the VR HMD's center, you need to manually apply the hand tracking offset. This can be configured in the Leap XR Service Provider component's  the advanced options as below:
+    - Device Offset Mode: Manual Head Offset
+    - Temporal Warping Mode: Auto
+    - Device Offset Y Axis: -0.08
+    - Device Offset Z Axis: 0.12
+    - Device Tilt X Axis: 10
+
+
