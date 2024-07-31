@@ -13,27 +13,38 @@ We present **GradualReality** system that enables interaction with physical obje
 ## Main Features 
 
 ## Prerequisites 
+We implemented this project with Unity 2021.3.2f1. 
+
 ### Hardware Requirements
 - HTC VIVE PRO 2
 - VIVE Tracker 3.0 for object tracking 
-- Leap Motion for hand tracking 
+- Leap Motion contorller 1 for hand tracking 
 - ZED Mini camera for Pass-Through implementation 
 - Windows 11 computer with 8 GB RAM or more and NVIDIA GTX 2070 or higher satisfying ZED Mini requirements 
 
-#### ZED Mini and Leap Motion Setup with HTC Vive Pro 2
-We have attached the ZED Mini and Leap Motion to the HTC VIVE PRO 2 as shown below.
-<p align="left">
-    <img src="Figures/7.DeviceSetup.png" alt="Device Setup" width="30%" style="float:left; margin-right:30px;">
-</p>
+<details>
+    <summary>ZED Mini and Leap Motion Setup with HTC Vive Pro 2</summary>
+    We have attached the ZED Mini and Leap Motion to the HTC VIVE PRO 2 as shown below.
+    <p align="left">
+        <img src="Figures/7.DeviceSetup.png" alt="Device Setup" width="30%" style="float:left; margin-right:30px;">
+    </p>
 
-1. Zed Mini
-- The ZED Mini should be aligned with the center of the front camera of the HTC VIVE PRO 2. 
-- Putting it below the HMD's camera is one possible option, but you will need to adjust the zed camera's parameters, which ~~is a disaster~~ can make implementing Pass-Through very difficult (it becomes challenging to accurately apply Pass-Through to the exact position of objects).
+    1. Zed Mini
+    - The ZED Mini should be aligned with the center of the front camera of the HTC VIVE PRO 2. 
+    - Putting it below the HMD's camera is one possible option, but you will need to adjust the zed camera's parameters, which ~~is a disaster~~ can make implementing Pass-Through very difficult (it becomes challenging to accurately apply Pass-Through to the exact position of objects).
 
-2. Leap Motion 
-- The Leap Motion is attached below the front camera of the HTC VIVE PRO 2. 
-- Since the ZED Mini obstructs the front camera, it is not possible to use hand tracking provided by VIVE, Steam, or OpenXR, making the Leap Motion necessary.
+    2. Leap Motion 
+    - The Leap Motion is attached below the front camera of the HTC VIVE PRO 2. 
+    - Since the ZED Mini obstructs the front camera, it is not possible to use hand tracking provided by VIVE, Steam, or OpenXR, making the Leap Motion necessary.
+</details>
 
+### SDK Requirements
+- Steam VR Plugin 2.7.3 (sdk 1.14.15)
+- XR Plugin Management 4.3.1 
+- OpenVR XR Plugin 1.1.4 (Renference [link](https://docs.unity3d.com/Packages/com.unity.xr.management@4.3/manual/index.html).)
+- VIVE Input Utility 1.17.0
+- Zed Unity Plugin v3.8.0 (Download from this [link](https://www.stereolabs.com/en-kr/developers/release/3.8).)
+- Ultraleap Tracking 6.6.0 (Follow the instructions for setting up OpenUPM from [this link](https://github.com/ultraleap/UnityPlugin?tab=readme-ov-file#Installation).)
 
 ## Code
 
