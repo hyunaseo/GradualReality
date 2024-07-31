@@ -29,11 +29,11 @@ We implemented this project with Unity 2021.3.2f1.
         <img src="Figures/7.DeviceSetup.png" alt="Device Setup" width="30%" style="float:left; margin-right:30px;">
     </p>
 
-1. Zed Mini
+1. **Zed Mini**
 - The ZED Mini should be aligned with the center of the front camera of the HTC VIVE PRO 2.
 - Putting it below the HMD's camera is one possible option, but you will need to adjust the zed camera's parameters, which ~~is a disaster~~ can make implementing Pass-Through very difficult (it becomes challenging to accurately apply Pass-Through to the exact position of objects).
 
-2. **Leap Motion**
+2. **Leap Motion controller**
 - The Leap Motion is attached below the front camera of the HTC VIVE PRO 2.
 - Since the ZED Mini obstructs the front camera, it is not possible to use hand tracking provided by VIVE, Steam, or OpenXR, making the Leap Motion necessary.
 
@@ -47,8 +47,10 @@ We implemented this project with Unity 2021.3.2f1.
 - Zed Unity Plugin v3.8.0 (Download from this [link](https://www.stereolabs.com/en-kr/developers/release/3.8).)
 - Ultraleap Tracking 6.6.0 (Follow the instructions for setting up OpenUPM from [this link](https://github.com/ultraleap/UnityPlugin?tab=readme-ov-file#Installation).)
 
-## Code
-
 ## Initial Settings
 
-### Camera rig settings 
+### 1. Camera rig settings 
+There are three camera rigs for GradualRealtiy. Please add them to the scene as follows. If you need more detailed explanation about the component settings, please refer to [this](Assets/Prefabs/Camera Rigs/README.md). 
+1. *Main Camera Rig* for Virtual Environment: Add `Assets/Prefabs/Camera Rigs/Main Camera Rig` to the scene, and set its rotation as (0, 90, 0). Make sure to set the *Main Camera Rig* and *all its child game objects* to **inactive** in the scene!
+2. *Zed Camera Rig* to obtain camera feeds: Add `Assets/Prefabs/Camera Rigs/Zed Camera Rig` to the scene. Set the child objects *Frame* to **inactive** in the scene.
+3. *Pass-Through Camera Rig* to obtain render texture for Pass-Through and render it*: Add `Assets/Prefabs/Camera Rigs/Pass-Through Camera Rig` to the scene, and set its rotation as (0, 90, 0). 
