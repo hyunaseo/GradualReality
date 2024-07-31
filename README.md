@@ -29,20 +29,21 @@ We implemented this project with Unity 2021.3.2f1.
         <img src="Figures/7.DeviceSetup.png" alt="Device Setup" width="30%" style="float:left; margin-right:30px;">
     </p>
 
-    1. Zed Mini
-    - The ZED Mini should be aligned with the center of the front camera of the HTC VIVE PRO 2. 
-    - Putting it below the HMD's camera is one possible option, but you will need to adjust the zed camera's parameters, which ~~is a disaster~~ can make implementing Pass-Through very difficult (it becomes challenging to accurately apply Pass-Through to the exact position of objects).
+    1. **Zed Mini**
+        - The ZED Mini should be aligned with the center of the front camera of the HTC VIVE PRO 2.
+        - Putting it below the HMD's camera is one possible option, but you will need to adjust the zed camera's parameters, which ~~is a disaster~~ can make implementing Pass-Through very difficult (it becomes challenging to accurately apply Pass-Through to the exact position of objects).
 
-    2. Leap Motion 
-    - The Leap Motion is attached below the front camera of the HTC VIVE PRO 2. 
-    - Since the ZED Mini obstructs the front camera, it is not possible to use hand tracking provided by VIVE, Steam, or OpenXR, making the Leap Motion necessary.
+    2. **Leap Motion**
+        - The Leap Motion is attached below the front camera of the HTC VIVE PRO 2.
+        - Since the ZED Mini obstructs the front camera, it is not possible to use hand tracking provided by VIVE, Steam, or OpenXR, making the Leap Motion necessary.
+
 </details>
 
 ### SDK Requirements
-- Steam VR Plugin 2.7.3 (sdk 1.14.15)
 - XR Plugin Management 4.3.1 
-- OpenVR XR Plugin 1.1.4 (Renference [link](https://docs.unity3d.com/Packages/com.unity.xr.management@4.3/manual/index.html).)
+- Steam VR Plugin 2.7.3 (sdk 1.14.15)
 - VIVE Input Utility 1.17.0
+- OpenVR XR Plugin 1.1.4 (Renference [link](https://docs.unity3d.com/Packages/com.unity.xr.management@4.3/manual/index.html).)
 - Zed Unity Plugin v3.8.0 (Download from this [link](https://www.stereolabs.com/en-kr/developers/release/3.8).)
 - Ultraleap Tracking 6.6.0 (Follow the instructions for setting up OpenUPM from [this link](https://github.com/ultraleap/UnityPlugin?tab=readme-ov-file#Installation).)
 
