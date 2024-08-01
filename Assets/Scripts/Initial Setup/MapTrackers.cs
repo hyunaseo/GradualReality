@@ -8,13 +8,14 @@ using Valve.VR;
 public class MapTrackers : MonoBehaviour
 {
     SelectMainStudyMode.TaskMode taskMode; 
-
+    GetTrackerSerialNumbers getTrackerSerialNumbers;
     Dictionary<string, int> serial_id_Dict = new Dictionary<string, int>();
     Dictionary<string, string> serial_object_Dict = new Dictionary<string, string>();
 
     // Start is called before the first frame update
     void Start()
     {
+        getTrackerSerialNumbers = FindObjectOfType<GetTrackerSerialNumbers>();
         taskMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().taskMode;
         Debug.Log("task: " + taskMode);
         
@@ -56,29 +57,8 @@ public class MapTrackers : MonoBehaviour
             serial_object_Dict.Add("LHR-4A7CD0ED", "Bottle");
         }
 
-        ListDevices(serial_id_Dict);
+        getTrackerSerialNumbers.ListDeviceSerialNumbers(serial_id_Dict);
         MapTrackerToObject(serial_id_Dict, serial_object_Dict);
-    }
-
-
-    void ListDevices(Dictionary<string, int> serial_id_Dict){
-
-        for(int i=0; i < SteamVR.connected.Length; ++i){
-            ETrackedPropertyError error = new ETrackedPropertyError();
-            StringBuilder sb = new StringBuilder();
-
-            OpenVR.System.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_SerialNumber_String, sb, OpenVR.k_unMaxPropertyStringSize, ref error);
-            var SerialNumber = sb.ToString();
-
-            OpenVR.System.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_ModelNumber_String, sb, OpenVR.k_unMaxPropertyStringSize, ref error);
-            var ModelNumber = sb.ToString();
-
-            Debug.Log("SerialNum type: " + SerialNumber.GetType().Name);
-            if (SerialNumber.Length > 0 || ModelNumber.Length > 0){
-                Debug.Log("Device " + i.ToString() + " = " + SerialNumber + " | " + ModelNumber);
-                serial_id_Dict.Add(SerialNumber, i);
-            }
-        }
     }
 
     void MapTrackerToObject(Dictionary<string, int> serial_id_Dict, Dictionary<string, string> serial_object_Dict){

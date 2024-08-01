@@ -5,6 +5,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// This script is to set paramters of GradualReality. 
+/// Originally, those are set following our paper, but you can modify it by yourself too!
+/// </summary>
+
+
 public class GradualRealityManager : MonoBehaviour
 {
     [Header("Interaction State Triggering Thresholds")]

@@ -15,25 +15,16 @@ public class RotateZedTexture : MonoBehaviour
     [HideInInspector]
     public ZEDRenderingPlane zedRenderingPlane;
 
-    // Start is called before the first frame update
     void Start()
     {
-        // set shader
         rotateShader = Shader.Find("Unlit/RotationShader");
 
-        // set zed rendering plane object
         zedRenderingPlane = zedManager.gameObject.GetComponentInChildren<ZEDRenderingPlane>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // get zed texture - automatically updated
         zedTexture = zedRenderingPlane.TextureEye;
-
-        /// zedTexture test: apply it to the quad material
-        // testQuad.GetComponent<Renderer>().material.mainTexture = zedTexture;
-        ///
 
         if(zedTexture != null){
             mainMaterial.SetTexture("_MainTex", zedTexture);

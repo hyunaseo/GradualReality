@@ -35,6 +35,11 @@ public class RenderPassThrough : MonoBehaviour
 
     void Start()
     {
+        if (zedManager == null)
+        {
+            zedManager = FindObjectOfType<ZEDManager>();
+        }
+        
         // Set ZED rendering plane and camera
         zedRenderingPlane = zedManager.gameObject.GetComponentInChildren<ZEDRenderingPlane>();
         zedCamera = zedManager.zedCamera;
