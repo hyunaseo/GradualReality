@@ -23,7 +23,7 @@ public class SetObstacle : MonoBehaviour
         initParams = GameObject.FindObjectOfType<GradualRealityManager>();
         obstacleDistThr = initParams.AvoidStateDistance;
 
-        mainStudyMode = GameObject.Find("LIVE").GetComponent<SelectMainStudyMode>().baselineMode;
+        mainStudyMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().baselineMode;
     }
 
     // Update is called once per frame

@@ -35,7 +35,7 @@ public class GradualRealityManager : MonoBehaviour
     void Update()
     {
         // Convert ComplexManipulateStateTime to Frames 
-        ComplexManipulateStateFrameWindow = ComplexManipulateStateTime*30; 
+        ComplexManipulateStateFrameWindow = ComplexManipulateStateTime*30;
 
         // Set Leap motion hands' hovering distance as Approach State Distance. 
         // HoverAcionRadius is used to trigger the virtual button rendering. 

@@ -80,8 +80,8 @@ public class RenderPipeline : MonoBehaviour
     void Start()
     {
         //Default GO Setting
-        mainStudyMode = GameObject.Find("LIVE").GetComponent<SelectMainStudyMode>().baselineMode;
-        taskMode = GameObject.Find("LIVE").GetComponent<SelectMainStudyMode>().taskMode;
+        mainStudyMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().baselineMode;
+        taskMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().taskMode;
         tracker = transform.GetChild(0).GetChild(0).gameObject;
         interactionButton = tracker.transform.Find("Button").Find("Cube UI Button").GetComponent<InteractionButton>();
         //buttonBody = interactionButton.transform.GetChild(0).gameObject;
@@ -133,6 +133,7 @@ public class RenderPipeline : MonoBehaviour
         trackerMovingErrorThr = initParams.TrackingErrorThreshold;
         moveWindow = initParams.MovementDetectionFrameWindow;
         manipulateWindow = initParams.ComplexManipulateStateFrameWindow;
+        Debug.Log("HYUNA: Manipulate Window" + initParams.ComplexManipulateStateFrameWindow);
     }
 
     void Update()

@@ -15,7 +15,7 @@ public class MapTrackers : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        taskMode = GameObject.Find("LIVE").GetComponent<SelectMainStudyMode>().taskMode;
+        taskMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().taskMode;
         Debug.Log("task: " + taskMode);
         
         if(taskMode == SelectMainStudyMode.TaskMode.Tutorial){
