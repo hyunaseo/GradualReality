@@ -9,7 +9,7 @@ public class DrawBoundingBox : MonoBehaviour
     Vector3[] vertices;
 
     Color lineColor;
-    InitParams initParams;
+    GradualRealityManager initParams;
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +17,8 @@ public class DrawBoundingBox : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         vertices = GetComponent<MeshFilter>().mesh.vertices;
 
-        initParams = GameObject.FindObjectOfType<InitParams>();
-        lineColor = initParams.lineColor;
+        initParams = GameObject.FindObjectOfType<GradualRealityManager>();
+        lineColor = initParams.BoundaryBoxLineColor;
     }
 
     // Update is called once per frame

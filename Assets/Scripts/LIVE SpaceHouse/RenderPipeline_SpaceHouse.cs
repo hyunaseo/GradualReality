@@ -55,7 +55,7 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
     public bool isObstacle = false;
 
     //Set Thresholds
-    InitParams initParams;
+    GradualRealityManager initParams;
 
     //Variables for manipulation state
     public int handNotInCount = 0;
@@ -125,10 +125,10 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
 
         priorPos = transform.position;
 
-        initParams = GameObject.FindObjectOfType<InitParams>();
-        trackerMovingErrorThr = initParams.trackerMovingErrorThr;
-        moveWindow = initParams.moveWindow;
-        manipulateWindow = initParams.manipulateWindow;
+        initParams = GameObject.FindObjectOfType<GradualRealityManager>();
+        trackerMovingErrorThr = initParams.TrackingErrorThreshold;
+        moveWindow = initParams.MovementDetectionTimeWindow;
+        manipulateWindow = initParams.ComplexManipulateStateTimeWindow;
 
         popcornContainer = GameObject.Find("PopcornContainer");
         containerState = popcornContainer.GetComponent<RenderPipeline>().currenInteractionState;

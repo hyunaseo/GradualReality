@@ -6,9 +6,9 @@ using UnityEngine;
 public class SetObstacle : MonoBehaviour
 {
     Dictionary<RenderPipeline, Vector3> posDict = new Dictionary<RenderPipeline, Vector3>();
-    
+
     //Set Thresholds
-    InitParams initParams;
+    GradualRealityManager initParams;
     float obstacleDistThr = 0.3f;
     SelectMainStudyMode.BaselineMode mainStudyMode;
 
@@ -20,8 +20,8 @@ public class SetObstacle : MonoBehaviour
             if(child.gameObject.activeSelf) posDict.Add(child.GetComponent<RenderPipeline>(), child.position);
         }
 
-        initParams = GameObject.FindObjectOfType<InitParams>();
-        obstacleDistThr = initParams.obstacleDistThr;
+        initParams = GameObject.FindObjectOfType<GradualRealityManager>();
+        obstacleDistThr = initParams.AvoidStateDistance;
 
         mainStudyMode = GameObject.Find("LIVE").GetComponent<SelectMainStudyMode>().baselineMode;
     }
