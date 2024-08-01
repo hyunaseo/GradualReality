@@ -2738,6 +2738,22 @@ PrefabInstance:
       propertyPath: taskMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1352076636250532495, guid: d0733c79c6ea49543b8500f538a2718d, type: 3}
+      propertyPath: AvoidStateDistance
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352076636250532495, guid: d0733c79c6ea49543b8500f538a2718d, type: 3}
+      propertyPath: BoundaryBoxLineColor.b
+      value: 0.8047811
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352076636250532495, guid: d0733c79c6ea49543b8500f538a2718d, type: 3}
+      propertyPath: BoundaryBoxLineColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352076636250532495, guid: d0733c79c6ea49543b8500f538a2718d, type: 3}
+      propertyPath: BoundaryBoxLineColor.r
+      value: 0.025157154
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0733c79c6ea49543b8500f538a2718d, type: 3}
 --- !u!23 &5286540466028160538

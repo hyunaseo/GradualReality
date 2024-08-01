@@ -131,8 +131,8 @@ public class RenderPipeline : MonoBehaviour
 
         initParams = GameObject.FindObjectOfType<GradualRealityManager>();
         trackerMovingErrorThr = initParams.TrackingErrorThreshold;
-        moveWindow = initParams.MovementDetectionTimeWindow;
-        manipulateWindow = initParams.ComplexManipulateStateTimeWindow;
+        moveWindow = initParams.MovementDetectionFrameWindow;
+        manipulateWindow = initParams.ComplexManipulateStateFrameWindow;
     }
 
     void Update()

@@ -127,8 +127,8 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
 
         initParams = GameObject.FindObjectOfType<GradualRealityManager>();
         trackerMovingErrorThr = initParams.TrackingErrorThreshold;
-        moveWindow = initParams.MovementDetectionTimeWindow;
-        manipulateWindow = initParams.ComplexManipulateStateTimeWindow;
+        moveWindow = initParams.MovementDetectionFrameWindow;
+        manipulateWindow = initParams.ComplexManipulateStateFrameWindow;
 
         popcornContainer = GameObject.Find("PopcornContainer");
         containerState = popcornContainer.GetComponent<RenderPipeline>().currenInteractionState;

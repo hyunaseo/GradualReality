@@ -8,27 +8,37 @@ using UnityEngine.Events;
 public class GradualRealityManager : MonoBehaviour
 {
     [Header("Interaction State Triggering Thresholds")]
+    
+    [Tooltip("Hand-Object distance threshold to trigger Approach State (units: m)")]
     public float ApproachStateDistance = 0.12f;
-    public float AvoidStateDistance = 0.30f;
-    public int ComplexManipulateStateTimeWindow = 90;
+    [Tooltip("Object-Object distance threshold to trigger Avoid State (units: m)")]
+    public float AvoidStateDistance = 0.15f;
+    [Tooltip("Time threshold to automatically turn off Pass-Through for Complex Manipulate State (units: sec)")]
+    public int ComplexManipulateStateTime = 3;
+    
+    [HideInInspector]
+    public int ComplexManipulateStateFrameWindow; // ComplexManipulateStateTime should be converted as frames 
 
     [Header("Blending Method Parameters")]
-    public Color BoundaryBoxLineColor;
+
+    [Tooltip("Material for Affordance Contours")]
+    public Material AffordanceContourMaterial;
+    [Tooltip("Color of Boundary Box's line")]
+    public Color BoundaryBoxLineColor = new Color(0f, 1f, 0.8039216f);
 
     [HideInInspector]
     public float TrackingErrorThreshold = 0.005f;
     [HideInInspector]
-    public int MovementDetectionTimeWindow = 30;
+    public int MovementDetectionFrameWindow = 30;
+ 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // Convert ComplexManipulateStateTime to Frames 
+        ComplexManipulateStateFrameWindow = ComplexManipulateStateTime*30; 
+
+        // Set Leap motion hands' hovering distance as Approach State Distance. 
+        // HoverAcionRadius is used to trigger the virtual button rendering. 
         InteractionManager[] HandManagers = GameObject.FindObjectsOfType<InteractionManager>();
         for(int i=0; i<HandManagers.Length; i++){
             HandManagers[i].hoverActivationRadius = ApproachStateDistance;
