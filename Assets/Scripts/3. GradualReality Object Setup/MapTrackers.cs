@@ -32,7 +32,7 @@ public class MapTrackers : MonoBehaviour
     void MapTrackerToVirtualProxy(List<TrackerInfo> TrackerVirtualProxyList){
         foreach (var mapping in TrackerVirtualProxyList){
             SteamVR_TrackedObject steamTrackedObject = mapping.Object.GetComponentInChildren<SteamVR_TrackedObject>();
-            steamTrackedObject.index = (SteamVR_TrackedObject.EIndex)Enum.Parse(typeof(SteamVR_TrackedObject.EIndex), "Device" + serial_id_Dict[mapping.SerialNumber].ToString());
+            steamTrackedObject.index = (SteamVR_TrackedObject.EIndex)Enum.Parse(typeof(SteamVR_TrackedObject.EIndex), "Device" + SerialNumberIDDictionary[mapping.SerialNumber].ToString());
             Debug.Log($"Object Setting Step 2. Tracker Serial Number: {mapping.SerialNumber}, Assigned Object: {mapping.Object.name}");
         }
     }

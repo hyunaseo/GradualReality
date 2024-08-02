@@ -4,15 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+ 
+/// <summary>
+///  This script is attached to each object and tracks its interactin state.
+/// </summary>
 public class RenderPipeline : MonoBehaviour
 {
     public enum InteractionState
     {
         Perceive,
-        Grab,
-        Move,
-        Manipulate
+        Approach,
+        ComplexManipulate, 
+        Avoid
     }
 
     public bool isCinema = false;
@@ -59,7 +62,7 @@ public class RenderPipeline : MonoBehaviour
     public bool isObstacle = false;
 
     //Set Thresholds
-    GradualRealityManager initParams;
+    GradualRealityManager gradualRealityManager;
 
     //Variables for manipulation state
     public int handNotInCount = 0;
@@ -79,7 +82,7 @@ public class RenderPipeline : MonoBehaviour
 
     void Start()
     {
-        //Default GO Setting
+        //Initial game object settings 
         mainStudyMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().baselineMode;
         taskMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().taskMode;
         tracker = transform.GetChild(0).GetChild(0).gameObject;
@@ -129,11 +132,11 @@ public class RenderPipeline : MonoBehaviour
 
         priorPos = transform.position;
 
-        initParams = GameObject.FindObjectOfType<GradualRealityManager>();
-        trackerMovingErrorThr = initParams.TrackingErrorThreshold;
-        moveWindow = initParams.MovementDetectionFrameWindow;
-        manipulateWindow = initParams.ComplexManipulateStateFrameWindow;
-        Debug.Log("HYUNA: Manipulate Window" + initParams.ComplexManipulateStateFrameWindow);
+        gradualRealityManager = GameObject.FindObjectOfType<GradualRealityManager>();
+        trackerMovingErrorThr = gradualRealityManager.TrackingErrorThreshold;
+        moveWindow = gradualRealityManager.MovementDetectionFrameWindow;
+        manipulateWindow = gradualRealityManager.ComplexManipulateStateFrameWindow;
+        Debug.Log("HYUNA: Manipulate Window" + gradualRealityManager.ComplexManipulateStateFrameWindow);
     }
 
     void Update()
@@ -146,7 +149,7 @@ public class RenderPipeline : MonoBehaviour
         // Mode: Automatic Trigger 
         else if(mainStudyMode == SelectMainStudyMode.BaselineMode.BaselineAuto){
             isHovered = passThroughNode.isPrimaryHovered || passThroughNode.isHovered;
-            if(isHovered) currenInteractionState = InteractionState.Manipulate;
+            if(isHovered) currenInteractionState = InteractionState.ComplexManipulate;
             else currenInteractionState = InteractionState.Perceive;
         }
 
@@ -166,15 +169,15 @@ public class RenderPipeline : MonoBehaviour
                 RenderPerceive();
                 break;
 
-            case InteractionState.Grab:
+            case InteractionState.Approach:
                 RenderGrab();
                 break;
 
-            case InteractionState.Move:
+            case InteractionState.Avoid:
                 RenderMove();
                 break;
 
-            case InteractionState.Manipulate:
+            case InteractionState.ComplexManipulate:
                 RenderManipulate();
                 break;
         }
@@ -221,17 +224,17 @@ public class RenderPipeline : MonoBehaviour
     {
         if (isButtonPressed || isHandManipulating)
         {
-            currenInteractionState = InteractionState.Manipulate;
+            currenInteractionState = InteractionState.ComplexManipulate;
         }
         else
         {
             if (isMoving)
             {
-                currenInteractionState = InteractionState.Move;
+                currenInteractionState = InteractionState.Avoid;
             }
             else if (isHovered)
             {
-                currenInteractionState = InteractionState.Grab;
+                currenInteractionState = InteractionState.Approach;
             }
             else
             {

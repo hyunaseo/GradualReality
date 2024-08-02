@@ -163,9 +163,9 @@ public class RenderPipeline_Cinema : MonoBehaviour
 
         if(containerState == RenderPipeline.InteractionState.Perceive)
             currenInteractionState = InteractionState.Perceive;
-        else if(containerState == RenderPipeline.InteractionState.Grab)
+        else if(containerState == RenderPipeline.InteractionState.Approach)
             currenInteractionState = InteractionState.Grab;
-        else if(containerState == RenderPipeline.InteractionState.Move)
+        else if(containerState == RenderPipeline.InteractionState.Avoid)
             currenInteractionState = InteractionState.Grab;
         else currenInteractionState = InteractionState.Perceive;
 

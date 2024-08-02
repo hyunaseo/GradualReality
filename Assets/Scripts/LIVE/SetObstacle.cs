@@ -34,7 +34,7 @@ public class SetObstacle : MonoBehaviour
         int moveCount = 0;
 
         foreach(var pair in posDict){
-            if(pair.Key.currenInteractionState == RenderPipeline.InteractionState.Move)
+            if(pair.Key.currenInteractionState == RenderPipeline.InteractionState.Avoid)
                 moveCount++;
         }
 
@@ -49,9 +49,9 @@ public class SetObstacle : MonoBehaviour
         foreach (var pair in posDict){
             foreach (var pair2 in posDict){
                 
-                if(pair.Key.currenInteractionState == RenderPipeline.InteractionState.Move 
-                   && pair2.Key.currenInteractionState != RenderPipeline.InteractionState.Move
-                   && pair2.Key.currenInteractionState != RenderPipeline.InteractionState.Manipulate) {
+                if(pair.Key.currenInteractionState == RenderPipeline.InteractionState.Avoid
+                   && pair2.Key.currenInteractionState != RenderPipeline.InteractionState.Avoid
+                   && pair2.Key.currenInteractionState != RenderPipeline.InteractionState.ComplexManipulate) {
                     
                     // float distance = Vector3.Distance(pair.Key.boundingBox.transform.position, pair2.Key.boundingBox.transform.position);
                     float distance = MeasureShortestDistance(pair.Key.boundingBox, pair2.Key.boundingBox);
