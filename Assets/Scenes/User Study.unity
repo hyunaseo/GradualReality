@@ -890,14 +890,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCinema: 0
-  isBar: 0
-  isBarBell: 0
-  boundingBox: {fileID: 0}
-  currenInteractionState: 0
-  isContact: 0
+  CurrenInteractionState: 0
+  BoundaryBox: {fileID: 0}
   isMoving: 0
-  isObstacle: 0
+  isNonTargetObject: 0
   handNotInCount: 0
   notMoveCount: 0
 --- !u!205 &113518755964033338
@@ -7463,14 +7459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCinema: 0
-  isBar: 0
-  isBarBell: 0
-  boundingBox: {fileID: 0}
-  currenInteractionState: 0
-  isContact: 0
+  CurrenInteractionState: 0
+  BoundaryBox: {fileID: 0}
   isMoving: 0
-  isObstacle: 0
+  isNonTargetObject: 0
   handNotInCount: 0
   notMoveCount: 0
 --- !u!114 &4121529643033792224
@@ -7485,14 +7477,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCinema: 0
-  isBar: 0
-  isBarBell: 0
-  boundingBox: {fileID: 0}
-  currenInteractionState: 0
-  isContact: 0
+  CurrenInteractionState: 0
+  BoundaryBox: {fileID: 0}
   isMoving: 0
-  isObstacle: 0
+  isNonTargetObject: 0
   handNotInCount: 0
   notMoveCount: 0
 --- !u!114 &4121529643367983010
@@ -7507,14 +7495,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCinema: 0
-  isBar: 0
-  isBarBell: 0
-  boundingBox: {fileID: 0}
-  currenInteractionState: 0
-  isContact: 0
+  CurrenInteractionState: 0
+  BoundaryBox: {fileID: 0}
   isMoving: 0
-  isObstacle: 0
+  isNonTargetObject: 0
   handNotInCount: 0
   notMoveCount: 0
 --- !u!114 &4121529643381548312
@@ -7529,14 +7513,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCinema: 0
-  isBar: 0
-  isBarBell: 0
-  boundingBox: {fileID: 0}
-  currenInteractionState: 0
-  isContact: 0
+  CurrenInteractionState: 0
+  BoundaryBox: {fileID: 0}
   isMoving: 0
-  isObstacle: 0
+  isNonTargetObject: 0
   handNotInCount: 0
   notMoveCount: 0
 --- !u!114 &4121529643485432523
@@ -7551,14 +7531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCinema: 0
-  isBar: 0
-  isBarBell: 0
-  boundingBox: {fileID: 0}
-  currenInteractionState: 0
-  isContact: 0
+  CurrenInteractionState: 0
+  BoundaryBox: {fileID: 0}
   isMoving: 0
-  isObstacle: 0
+  isNonTargetObject: 0
   handNotInCount: 0
   notMoveCount: 0
 --- !u!114 &4121529644372799149
@@ -7573,14 +7549,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCinema: 0
-  isBar: 0
-  isBarBell: 0
-  boundingBox: {fileID: 0}
-  currenInteractionState: 0
-  isContact: 0
+  CurrenInteractionState: 0
+  BoundaryBox: {fileID: 0}
   isMoving: 0
-  isObstacle: 0
+  isNonTargetObject: 0
   handNotInCount: 0
   notMoveCount: 0
 --- !u!65 &4125747980903479101
@@ -9350,7 +9322,7 @@ GameObject:
   - component: {fileID: 395330250954120437}
   - component: {fileID: 101934886411019061}
   - component: {fileID: 101934886411019050}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: MugBox
   m_TagString: BoundingBox
   m_Icon: {fileID: 0}
@@ -11574,7 +11546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8024232267053343256}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ContainerAffordance
   m_TagString: Affordance
   m_Icon: {fileID: 0}

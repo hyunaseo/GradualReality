@@ -34,14 +34,14 @@ public class SetObstacle_SpaceHouse : MonoBehaviour
         int moveCount = 0;
 
         foreach(var pair in posDict){
-            if(pair.Key.currenInteractionState == RenderPipeline.InteractionState.Avoid)
+            if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.Avoid)
                 moveCount++;
         }
 
         if(moveCount==0) {
             foreach (var pair in posDict)
             {
-                pair.Key.isObstacle = false;
+                pair.Key.isNonTargetObject = false;
             }
             return;
         }
@@ -49,17 +49,17 @@ public class SetObstacle_SpaceHouse : MonoBehaviour
         foreach (var pair in posDict){
             foreach (var pair2 in posDict){
                 
-                if(pair.Key.currenInteractionState == RenderPipeline.InteractionState.Avoid
-                   && pair2.Key.currenInteractionState != RenderPipeline.InteractionState.Avoid
-                   && pair2.Key.currenInteractionState != RenderPipeline.InteractionState.ComplexManipulate) {
+                if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.Avoid
+                   && pair2.Key.CurrenInteractionState != RenderPipeline.InteractionState.Avoid
+                   && pair2.Key.CurrenInteractionState != RenderPipeline.InteractionState.ComplexManipulate) {
                     
                     // float distance = Vector3.Distance(pair.Key.boundingBox.transform.position, pair2.Key.boundingBox.transform.position);
-                    float distance = MeasureShortestDistance(pair.Key.boundingBox, pair2.Key.boundingBox);
+                    float distance = MeasureShortestDistance(pair.Key.BoundaryBox, pair2.Key.BoundaryBox);
                     if(distance < obstacleDistThr){
-                        pair2.Key.isObstacle = true;
+                        pair2.Key.isNonTargetObject = true;
                     }
                     else{
-                        pair2.Key.isObstacle = false;
+                        pair2.Key.isNonTargetObject = false;
                     }
                 } 
             }

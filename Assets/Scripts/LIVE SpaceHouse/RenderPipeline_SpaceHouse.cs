@@ -100,9 +100,9 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
         {
             if (child.tag == "VirtualProxy")
                 virtualProxy = child.gameObject;
-            else if (child.tag == "Affordance")
+            else if (child.tag == "AffordanceContour")
                 affordance = child.gameObject;
-            else if (child.tag == "BoundingBox")
+            else if (child.tag == "BoundaryBox")
                 boundingBox = child.gameObject;
         }
 
@@ -131,7 +131,7 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
         manipulateWindow = initParams.ComplexManipulateStateFrameWindow;
 
         popcornContainer = GameObject.Find("PopcornContainer");
-        containerState = popcornContainer.GetComponent<RenderPipeline>().currenInteractionState;
+        containerState = popcornContainer.GetComponent<RenderPipeline>().CurrenInteractionState;
 
     }
 
@@ -159,7 +159,7 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
             TrackInteractionState();
         }
 
-        containerState = popcornContainer.GetComponent<RenderPipeline>().currenInteractionState;
+        containerState = popcornContainer.GetComponent<RenderPipeline>().CurrenInteractionState;
 
         if(containerState == RenderPipeline.InteractionState.Perceive)
             currenInteractionState = InteractionState.Perceive;

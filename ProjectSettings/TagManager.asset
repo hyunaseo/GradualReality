@@ -25,8 +25,8 @@ TagManager:
   - Interactable
   - Tracker
   - VirtualProxy
-  - Affordance
-  - BoundingBox
+  - AffordanceContour
+  - BoundaryBox
   - 
   - 
   - tagInvisibleToZED

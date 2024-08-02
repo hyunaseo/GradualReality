@@ -10,160 +10,118 @@ using UnityEngine.Events;
 /// </summary>
 public class RenderPipeline : MonoBehaviour
 {
+    GradualRealityManager GRManager; // GradualReality Manager to obtain parameters
+
+    #region Interaction States
+    
     public enum InteractionState
     {
         Perceive,
         Approach,
-        ComplexManipulate, 
+        SimpleManipulate,
+        ComplexManipulate,
         Avoid
     }
 
-    public bool isCinema = false;
-    public bool isBar = false;
-    public bool isBarBell = false;
+    public InteractionState CurrenInteractionState = InteractionState.Perceive;
+    
+    #endregion
 
-    //Default
-    SelectMainStudyMode.BaselineMode mainStudyMode;
-    GameObject tracker;
-    InteractionButton interactionButton;
-    GameObject buttonCore;
-    GameObject buttonBody;
 
-    //Related Mesh Renderer
-    MeshRenderer trackerRenderer;
+    #region Blending Methods
+
+    // Affordance Contour 
+    GameObject AffordanceContour;
+    MeshRenderer AffordanceContourRenderer;
+
+    // Boundary Box
+    [HideInInspector]
+    public GameObject BoundaryBox;
+    MeshRenderer BoundaryBoxRenderer;
+    LineRenderer BoundaryBoxLineRenderer = new LineRenderer();
+
+    // Pass-Through 
+    InteractionBehaviour PassThrough;
+    GameObject PassThroughEllipsoid;
+    MeshRenderer PassThroughRenderer;
+
+    #endregion
+
+
+    GameObject Tracker; // VIVE Tracker 
+    MeshRenderer TrackerRenderer;
+
+    InteractionButton interactionButton; // Interactable button provided by leap motion SDK 
+    GameObject interactionButtonCore;
     MeshRenderer[] buttonRenderers = new MeshRenderer[2];
 
-    //Leap Motion Interactable
-    InteractionBehaviour passThroughNode;
-
-    //Rendering
-    GameObject virtualProxy;
-    GameObject affordance;
-    [HideInInspector]
-    public GameObject boundingBox;
-    GameObject passThroughSphere;
-
-    //Related Mesh Renderer
-    MeshRenderer virtualProxyRenderer;
-    MeshRenderer affordanceRenderer;
-    MeshRenderer boundingBoxRenderer;
-    MeshRenderer passThroughRenderer;
-
-    //Interaction State 
-    public InteractionState currenInteractionState = InteractionState.Perceive;
-
     //Booleans for Interaction State Tracking
-    bool isButtonPressed = false;
-    bool isHandManipulating = false;
-    bool isHovered = false;
-    public bool isContact = false;
+    bool isComplexManipulateStateOn = false;
+    bool isHandInPassThroughArea = false;
+    bool isApproachStateOn = false;
     bool isTrackerPosChanged = false;
-    public bool isMoving = false;
-    public bool isObstacle = false;
-
-    //Set Thresholds
-    GradualRealityManager gradualRealityManager;
+    public bool isAvoidStateOn = false;
+    public bool isNonTargetObject = false;
 
     //Variables for manipulation state
     public int handNotInCount = 0;
-    int manipulateWindow = 90;
+    int ComplexManipulateStateFrameWindow;
 
     //Variables for move state
     List<GameObject> allTrackers = new List<GameObject>();
-    float trackerMovingErrorThr = 0.005f;
-    Vector3 currentPos;
-    Vector3 priorPos;
+    float TrackingErrorThreshold;
+    Vector3 CurrentPosition;
+    Vector3 PriorPosition;
     public int notMoveCount = 0;
-    int moveWindow = 30;
-    LineRenderer lineRenderer = new LineRenderer();
-
-    //For tutorial mode
-    SelectMainStudyMode.TaskMode taskMode;
+    int MovementDetectionFrameWindow = 30;
 
     void Start()
     {
-        //Initial game object settings 
-        mainStudyMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().baselineMode;
-        taskMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().taskMode;
-        tracker = transform.GetChild(0).GetChild(0).gameObject;
-        interactionButton = tracker.transform.Find("Button").Find("Cube UI Button").GetComponent<InteractionButton>();
-        //buttonBody = interactionButton.transform.GetChild(0).gameObject;
-        buttonCore = interactionButton.transform.GetChild(0).GetChild(0).gameObject;
+        GRManager = GameObject.FindObjectOfType<GradualRealityManager>();
+        Tracker = transform.GetChild(0).GetChild(0).gameObject;
+        PriorPosition = transform.position;
 
-        //Default Mesh Renderer Setting
-        trackerRenderer = tracker.GetComponent<MeshRenderer>();
-        buttonRenderers[0] = buttonCore.GetComponent<MeshRenderer>();
-        //buttonRenderers[1] = buttonBody.GetComponent<MeshRenderer>();
-
-        //Leap Motion Interactable Setting
-        passThroughNode = tracker.transform.Find("PassThroughSphere Node").GetComponent<InteractionBehaviour>();
-
-        //Rendering
-        foreach (Transform child in tracker.transform)
+        // Find the corresponding blending methods 
+        foreach (Transform child in Tracker.transform)
         {
-            if (child.tag == "VirtualProxy")
-                virtualProxy = child.gameObject;
-            else if (child.tag == "Affordance")
-                affordance = child.gameObject;
-            else if (child.tag == "BoundingBox")
-                boundingBox = child.gameObject;
-
-            if (gameObject.name == "CokeCan"){
-                virtualProxy = GameObject.Find("SciFi_Battery");
-            }
+            if (child.tag == "AffordanceContour")
+                AffordanceContour = child.gameObject;
+            if (child.tag == "BoundaryBox")
+                BoundaryBox = child.gameObject;
         }
 
-        passThroughSphere = passThroughNode.transform.GetChild(0).gameObject;
 
-        //Rendering Mesh Renderer Setting
-        // virtualProxyRenderer = virtualProxy.GetComponent<MeshRenderer>();
-        affordanceRenderer = affordance.transform.GetChild(0).GetComponentInChildren<MeshRenderer>();
-        boundingBoxRenderer = boundingBox.GetComponent<MeshRenderer>();
-        lineRenderer = boundingBox.GetComponent<LineRenderer>();
-        passThroughRenderer = passThroughSphere.GetComponent<MeshRenderer>();
+        // Affordance Contour setting
+        AffordanceContourRenderer = AffordanceContour.transform.GetChild(0).GetComponentInChildren<MeshRenderer>();
 
-        boundingBoxRenderer.enabled = false;
-        lineRenderer.enabled = false;
+        // Boundary Box setting 
+        BoundaryBoxRenderer = BoundaryBox.GetComponent<MeshRenderer>();
+        BoundaryBoxLineRenderer = BoundaryBox.GetComponent<LineRenderer>();
+        BoundaryBoxRenderer.enabled = false;
+        BoundaryBoxLineRenderer.enabled = false;
 
-        for (int i = 0; i < transform.parent.childCount; i++)
-        {
-            allTrackers.Add(transform.parent.GetChild(i).gameObject);
-        }
+        // Pass-Through setting 
+        PassThrough = Tracker.transform.Find("PassThroughSphere Node").GetComponent<InteractionBehaviour>();
+        PassThroughEllipsoid = PassThrough.transform.GetChild(0).gameObject;
+        PassThroughRenderer = PassThroughEllipsoid.GetComponent<MeshRenderer>();
 
-        priorPos = transform.position;
-
-        gradualRealityManager = GameObject.FindObjectOfType<GradualRealityManager>();
-        trackerMovingErrorThr = gradualRealityManager.TrackingErrorThreshold;
-        moveWindow = gradualRealityManager.MovementDetectionFrameWindow;
-        manipulateWindow = gradualRealityManager.ComplexManipulateStateFrameWindow;
-        Debug.Log("HYUNA: Manipulate Window" + gradualRealityManager.ComplexManipulateStateFrameWindow);
+        // Default mesh renderer Setting
+        TrackerRenderer = Tracker.GetComponent<MeshRenderer>();
+        interactionButton = Tracker.transform.Find("Button").Find("Cube UI Button").GetComponent<InteractionButton>();
+        interactionButtonCore = interactionButton.transform.GetChild(0).GetChild(0).gameObject;
+        buttonRenderers[0] = interactionButtonCore.GetComponent<MeshRenderer>();
     }
 
     void Update()
     {
-        // Mode: Always-on Virtual Proxy
-        if(mainStudyMode == SelectMainStudyMode.BaselineMode.VirtualProxy){
-            currenInteractionState = InteractionState.Perceive;
-        }
+        // Retrieve threholds 
+        TrackingErrorThreshold = GRManager.TrackingErrorThreshold;
+        MovementDetectionFrameWindow = GRManager.MovementDetectionFrameWindow;
+        ComplexManipulateStateFrameWindow = GRManager.ComplexManipulateStateFrameWindow;
 
-        // Mode: Automatic Trigger 
-        else if(mainStudyMode == SelectMainStudyMode.BaselineMode.BaselineAuto){
-            isHovered = passThroughNode.isPrimaryHovered || passThroughNode.isHovered;
-            if(isHovered) currenInteractionState = InteractionState.ComplexManipulate;
-            else currenInteractionState = InteractionState.Perceive;
-        }
+        TrackInteractionState();
 
-        // Mode: LIVE or Manual Trigger
-        else {
-            isButtonPressed = interactionButton.isPressed;
-            if (isButtonPressed) isHandManipulating = true;
-            isHovered = passThroughNode.isPrimaryHovered || passThroughNode.isHovered;
-            isTrackerPosChanged = isTrackerMoving();
-            if (isTrackerPosChanged) isMoving = true;
-            TrackInteractionState();
-        }
-
-        switch (currenInteractionState)
+        switch (CurrenInteractionState)
         {
             case InteractionState.Perceive:
                 RenderPerceive();
@@ -182,147 +140,91 @@ public class RenderPipeline : MonoBehaviour
                 break;
         }
 
-        if(isObstacle) {
-            boundingBoxRenderer.enabled = true;
-            lineRenderer.enabled = true;
+        if(isNonTargetObject) {
+            BoundaryBoxRenderer.enabled = true;
+            BoundaryBoxLineRenderer.enabled = true;
         }
-        // else if (isBarBell){
-        //     boundingBoxRenderer.enabled = false;
-        //     lineRenderer.enabled = false;
-        //     trackerRenderer.enabled = false;
-        //     buttonRenderers[0].enabled = false;
-        // }
-        // else if (isBar){
-        //     trackerRenderer.enabled = false;
-        //     buttonRenderers[0].enabled = false;
-        // }
-        // else if (!isObstacle){
-        //     boundingBoxRenderer.enabled = false;
-        //     lineRenderer.enabled = false;
-        // }
 
-        // if (isBarBell && currenInteractionState != InteractionState.Grab)
-        // {
-        //     buttonRenderers[0].enabled = false;
-        //     boundingBoxRenderer.enabled = false;
-        // }
-
-        // if (isCinema) {
-        //     trackerRenderer.enabled = false;
-        //     lineRenderer.enabled = false;
-        //     boundingBoxRenderer.enabled = false;
-
-        //     // if(currenInteractionState == InteractionState.Manipulate){
-        //     //     virtualProxyRenderer.enabled = false;
-        //     // }
-        // }
-
-        trackerRenderer.enabled = true;
+        TrackerRenderer.enabled = true;
     }
 
     void TrackInteractionState()
     {
-        if (isButtonPressed || isHandManipulating)
-        {
-            currenInteractionState = InteractionState.ComplexManipulate;
-        }
-        else
-        {
-            if (isMoving)
-            {
-                currenInteractionState = InteractionState.Avoid;
-            }
-            else if (isHovered)
-            {
-                currenInteractionState = InteractionState.Approach;
-            }
-            else
-            {
-                currenInteractionState = InteractionState.Perceive;
-            }
-        }
+        // Update the boolean values for the interaction state based on the input data
+        isApproachStateOn = PassThrough.isPrimaryHovered || PassThrough.isHovered;
+        
+        isTrackerPosChanged = isTrackerMoving();
+        if (isTrackerPosChanged) isAvoidStateOn = true;
+        
+        isComplexManipulateStateOn = interactionButton.isPressed;
+        if (isComplexManipulateStateOn) isHandInPassThroughArea = true;
+        
+        // Set CurrentInteractionState 
+        if (isComplexManipulateStateOn || isHandInPassThroughArea) CurrenInteractionState = InteractionState.ComplexManipulate;
+        else if (isAvoidStateOn) CurrenInteractionState = InteractionState.Avoid;
+        else if (isApproachStateOn) CurrenInteractionState = InteractionState.Approach;
+        else CurrenInteractionState = InteractionState.Perceive; 
     }
 
     void RenderPerceive()
     {
-        trackerRenderer.enabled = false;
+        TrackerRenderer.enabled = false;
         // virtualProxyRenderer.enabled = true;
 
-        affordanceRenderer.enabled = false;
+        AffordanceContourRenderer.enabled = false;
         buttonRenderers[0].enabled = false;
-        passThroughRenderer.enabled = false;
+        PassThroughRenderer.enabled = false;
 
-        if (!isObstacle)
+        if (!isNonTargetObject)
         {
-            boundingBoxRenderer.enabled = false;
-            lineRenderer.enabled = false;
+            BoundaryBoxRenderer.enabled = false;
+            BoundaryBoxLineRenderer.enabled = false;
         }
     }
 
     void RenderGrab()
     {
-        trackerRenderer.enabled = false;
-        // virtualProxyRenderer.enabled = true;
-
-        if (mainStudyMode == SelectMainStudyMode.BaselineMode.LIVE){
-            if (taskMode == SelectMainStudyMode.TaskMode.Tutorial && transform.name == "GreenBox")
-            {
-                Debug.Log("Green out");
-                affordanceRenderer.enabled = false;
-            }
-            else affordanceRenderer.enabled = true;
-        }
-        else
-            affordanceRenderer.enabled = false;
-
-
+        TrackerRenderer.enabled = false;
+        AffordanceContourRenderer.enabled = true;
         buttonRenderers[0].enabled = true;
 
-        passThroughRenderer.enabled = false;
+        PassThroughRenderer.enabled = false;
     }
 
     void RenderMove()
     {
         //Set Renderer Enable Status
-        trackerRenderer.enabled = false;
+        TrackerRenderer.enabled = false;
         // virtualProxyRenderer.enabled = true;
-
-        if (mainStudyMode == SelectMainStudyMode.BaselineMode.LIVE)
-            affordanceRenderer.enabled = true;
-        else
-            affordanceRenderer.enabled = false;
-
-        if (taskMode == SelectMainStudyMode.TaskMode.Tutorial && transform.name == "GreenBox"){
-            affordanceRenderer.enabled = false;
-        }
+        AffordanceContourRenderer.enabled = true;
 
         buttonRenderers[0].enabled = true;
-        passThroughRenderer.enabled = false;
+        PassThroughRenderer.enabled = false;
 
         //Count Moving Frame
         if (isTrackerMoving()) notMoveCount = 0;
         else notMoveCount++;
 
         //If not moving, turn off Box
-        if (notMoveCount > moveWindow)
+        if (notMoveCount > MovementDetectionFrameWindow)
         {
-            isMoving = false;
+            isAvoidStateOn = false;
             notMoveCount = 0;
         }
         else
         {
-            isMoving = true;
+            isAvoidStateOn = true;
         }
     }
 
     public void RenderManipulate()
     {
         //Set Renderer Enable Status
-        passThroughRenderer.enabled = true;
+        PassThroughRenderer.enabled = true;
 
-        trackerRenderer.enabled = false;
+        TrackerRenderer.enabled = false;
         // virtualProxyRenderer.enabled = false;
-        affordanceRenderer.enabled = false;
+        AffordanceContourRenderer.enabled = false;
         buttonRenderers[0].enabled = false;
         
         //Count Hand In Frame #
@@ -330,29 +232,29 @@ public class RenderPipeline : MonoBehaviour
         else handNotInCount++;
 
         //If Hand is not in, turn off PT
-        if (handNotInCount > manipulateWindow)
+        if (handNotInCount > ComplexManipulateStateFrameWindow)
         {
-            isHandManipulating = false;
+            isHandInPassThroughArea = false;
             handNotInCount = 0;
         }
         else
         {
-            isHandManipulating = true;
+            isHandInPassThroughArea = true;
         }
     }
     
 
     bool isHandInSphere()
     {
-        return isHovered;
+        return isApproachStateOn;
     }
 
     bool isTrackerMoving()
     {
-        currentPos = transform.position;
-        if (Vector3.Distance(currentPos, priorPos) > trackerMovingErrorThr)
+        CurrentPosition = transform.position;
+        if (Vector3.Distance(CurrentPosition, PriorPosition) > TrackingErrorThreshold)
         {
-            priorPos = currentPos;
+            PriorPosition = CurrentPosition;
             return true;
         }
 
