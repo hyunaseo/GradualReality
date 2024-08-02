@@ -47,13 +47,21 @@ We implemented this project with Unity 2021.3.2f1.
 - Zed Unity Plugin v3.8.0 (Download from this [link](https://www.stereolabs.com/en-kr/developers/release/3.8).)
 - Ultraleap Tracking 6.6.0 (Follow the instructions for setting up OpenUPM from [this link](https://github.com/ultraleap/UnityPlugin?tab=readme-ov-file#Installation).)
 
+
+## Code 
+This code is structured to execute GradualReality, encompassing the following key tasks:
+
+1. [**Initial Settings for cameras and hand tracking**](#initial-settings)
+2. [**GradualReality Settings for interaction states and blending methods**](#gradualreality-settings)
+3. **Object Settings for tracker assignment and physical object information**
+
 ## Initial Settings
 
-### 1. Camera rig settings 
+### 1. Set camera rigs
 There are three camera rigs for GradualRealtiy. Please add them to the scene as follows. If you need more detailed explanation about the component settings, please refer to [this](./Assets/Prefabs/Camera%20Rigs).
-1. *Main Camera Rig* for Virtual Environment: Add `Assets/Prefabs/Camera Rigs/Main Camera Rig` to the scene, and set its rotation as (0, 90, 0). Make sure to set the *Main Camera Rig* and *all its child game objects* to **inactive** in the scene!
-2. *Zed Camera Rig* to obtain camera feeds: Add `Assets/Prefabs/Camera Rigs/Zed Camera Rig` to the scene. Set the child objects *Frame* to **inactive** in the scene.
-3. *Pass-Through Camera Rig* to obtain render texture for Pass-Through and render it*: Add `Assets/Prefabs/Camera Rigs/Pass-Through Camera Rig` to the scene, and set its rotation as (0, 90, 0). 
+1. `Main Camera Rig` for Virtual Environment: Add `Assets/Prefabs/Camera Rigs/Main Camera Rig` to the scene, and set its rotation as (0, 90, 0). Make sure to set the `Main Camera Rig` and `all its child game objects` to **inactive** in the scene!
+2. `Zed Camera Rig` to obtain camera feeds: Add `Assets/Prefabs/Camera Rigs/Zed Camera Rig` to the scene. Set the child objects `Frame` to **inactive** in the scene.
+3. `Pass-Through Camera Rig` to obtain render texture for Pass-Through and render it: Add `Assets/Prefabs/Camera Rigs/Pass-Through Camera Rig` to the scene, and set its rotation as (0, 90, 0). 
 
 <details>
     <summary>Camera rigs in the scene</summary>
@@ -62,11 +70,11 @@ There are three camera rigs for GradualRealtiy. Please add them to the scene as 
     </p>
 </details>
 
-### 2. Hand tracking settings 
+### 2. Set hand tracking
 1. Add `Assets/Prefabs/Hand Tracking/Hands` to the scene, and set its rotation as (0, 90, 0). 
-2. Set *Hands* > *Interaction Manager* and its children game objects' layer as `Hands`. 
-3. Find *Hands* > *XR Leap Provider Manager* > *Service Provider (XR)* game objects in the scene. 
-- Link main camera: For Leap XR Service Provider component's Main Camera, add *Main Camera Rig* > *Main Camera* game object in the scene. 
+2. Set `Hands` > `Interaction Manager` and its children game objects' layer as `Hands`. 
+3. Find `Hands` > `XR Leap Provider Manager` > `Service Provider (XR)` game objects in the scene. 
+- Link main camera: For Leap XR Service Provider component's Main Camera, add `Main Camera Rig` > `Main Camera` game object in the scene. 
 - Modify hand tracking offset: Since the Leap Motion is attached below the VR HMD's center, you need to manually apply the hand tracking offset. This can be configured in the Leap XR Service Provider component's  the advanced options as below:
     - Device Offset Mode: Manual Head Offset
     - Temporal Warping Mode: Auto
@@ -76,3 +84,10 @@ There are three camera rigs for GradualRealtiy. Please add them to the scene as 
 
 ### 3. Virtual scene settings 
 Add your own virtual scenes and components for your amazing immersive experience!!!!
+
+## GradualReality Settings 
+### 1. Set interaction state triggering parameters and blending methods options 
+1. Add `Assets/Prefabs/GradualReality` to the scene, and set its rotation as (0, 90, 0). The `GradualReality` prefab consists of a total of 3 components as below. 
+    - `GradualReality Manager`: You can set detailed parameteres of GradualReality from this.
+    - `Initialize Camera Rigs`: Since the rendering order changes according to the active status of the camera rigs, you must manually connect the `Zed Camera Rig` and `Main Camera Rig` in the inspector using this script. 
+    - (Optional) `Zoom Field Of View`: This resolves issues arising from the different FoVs of the ZED mini and VR HMD. This is not mandatory; for more details, please refer to the comments within the script.
