@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawBoundingBox : MonoBehaviour
+public class DrawBoundaryBox : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     Vector3[] vertices;
