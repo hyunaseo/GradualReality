@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SetObstacle_SpaceHouse : MonoBehaviour
 {
-    Dictionary<InteractionStateAwareBlending, Vector3> posDict = new Dictionary<RenderPipeline, Vector3>();
+    Dictionary<InteractionStateAwareBlending, Vector3> posDict = new Dictionary<InteractionStateAwareBlending, Vector3>();
 
     //Set Thresholds
     GradualRealityManager initParams;
@@ -17,7 +17,7 @@ public class SetObstacle_SpaceHouse : MonoBehaviour
     {
         for(int i=0; i<transform.childCount; i++){
             Transform child = transform.GetChild(i);
-            if (child.gameObject.activeSelf && child.GetComponent<InteractionStateAwareBlending>()!=null) posDict.Add(child.GetComponent<RenderPipeline>(), child.position);
+            if (child.gameObject.activeSelf && child.GetComponent<InteractionStateAwareBlending>()!=null) posDict.Add(child.GetComponent<InteractionStateAwareBlending>(), child.position);
         }
 
         initParams = GameObject.FindObjectOfType<GradualRealityManager>();
@@ -34,7 +34,7 @@ public class SetObstacle_SpaceHouse : MonoBehaviour
         int moveCount = 0;
 
         foreach(var pair in posDict){
-            if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.SimpleManipulate)
+            if(pair.Key.CurrenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate)
                 moveCount++;
         }
 
@@ -49,9 +49,9 @@ public class SetObstacle_SpaceHouse : MonoBehaviour
         foreach (var pair in posDict){
             foreach (var pair2 in posDict){
                 
-                if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.SimpleManipulate
-                   && pair2.Key.CurrenInteractionState != RenderPipeline.InteractionState.SimpleManipulate
-                   && pair2.Key.CurrenInteractionState != RenderPipeline.InteractionState.ComplexManipulate) {
+                if(pair.Key.CurrenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate
+                   && pair2.Key.CurrenInteractionState != InteractionStateAwareBlending.InteractionState.SimpleManipulate
+                   && pair2.Key.CurrenInteractionState != InteractionStateAwareBlending.InteractionState.ComplexManipulate) {
                     
                     // float distance = Vector3.Distance(pair.Key.boundingBox.transform.position, pair2.Key.boundingBox.transform.position);
                     float distance = MeasureShortestDistance(pair.Key.BoundaryBox, pair2.Key.BoundaryBox);

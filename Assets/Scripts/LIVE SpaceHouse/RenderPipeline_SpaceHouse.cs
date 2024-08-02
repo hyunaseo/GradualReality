@@ -131,7 +131,7 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
         manipulateWindow = initParams.ComplexManipulateStateFrameWindow;
 
         popcornContainer = GameObject.Find("PopcornContainer");
-        containerState = popcornContainer.GetComponent<RenderPipeline>().CurrenInteractionState;
+        containerState = popcornContainer.GetComponent<InteractionStateAwareBlending>().CurrenInteractionState;
 
     }
 
@@ -159,13 +159,13 @@ public class RenderPipeline_SpaceHouse : MonoBehaviour
             TrackInteractionState();
         }
 
-        containerState = popcornContainer.GetComponent<RenderPipeline>().CurrenInteractionState;
+        containerState = popcornContainer.GetComponent<InteractionStateAwareBlending>().CurrenInteractionState;
 
-        if(containerState == RenderPipeline.InteractionState.Perceive)
+        if(containerState == InteractionStateAwareBlending.InteractionState.Perceive)
             currenInteractionState = InteractionState.Perceive;
-        else if(containerState == RenderPipeline.InteractionState.Approach)
+        else if(containerState == InteractionStateAwareBlending.InteractionState.Approach)
             currenInteractionState = InteractionState.Grab;
-        else if(containerState == RenderPipeline.InteractionState.SimpleManipulate)
+        else if(containerState == InteractionStateAwareBlending.InteractionState.SimpleManipulate)
             currenInteractionState = InteractionState.Grab;
         else currenInteractionState = InteractionState.Perceive;
 
