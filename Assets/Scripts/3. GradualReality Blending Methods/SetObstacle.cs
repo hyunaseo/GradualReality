@@ -5,57 +5,49 @@ using UnityEngine;
 
 public class SetObstacle : MonoBehaviour
 {
-    Dictionary<InteractionStateAwareBlending, Vector3> posDict = new Dictionary<InteractionStateAwareBlending, Vector3>();
+    Dictionary<InteractionStateAwareBlending, Vector3> ObjectPositionDictionary = new Dictionary<InteractionStateAwareBlending, Vector3>();
 
-    //Set Thresholds
-    GradualRealityManager initParams;
-    float obstacleDistThr = 0.3f;
-    SelectMainStudyMode.BaselineMode mainStudyMode;
+    GradualRealityManager GRManager;
+    float AvoidStateDistance;
 
-    // Start is called before the first frame update
     void Start()
     {
         for(int i=0; i<transform.childCount; i++){
             Transform child = transform.GetChild(i);
-            if(child.gameObject.activeSelf) posDict.Add(child.GetComponent<InteractionStateAwareBlending>(), child.position);
+            if(child.gameObject.activeSelf) ObjectPositionDictionary.Add(child.GetComponent<InteractionStateAwareBlending>(), child.position);
         }
 
-        initParams = GameObject.FindObjectOfType<GradualRealityManager>();
-        obstacleDistThr = initParams.AvoidStateDistance;
-
-        mainStudyMode = GameObject.Find("GradualReality").GetComponent<SelectMainStudyMode>().baselineMode;
+        GRManager = GameObject.FindObjectOfType<GradualRealityManager>();
+        AvoidStateDistance = GRManager.AvoidStateDistance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(mainStudyMode != SelectMainStudyMode.BaselineMode.LIVE) return;
-        
-        int moveCount = 0;
+        int SimpleManipulateStateFrame = 0;
 
-        foreach(var pair in posDict){
+        foreach(var pair in ObjectPositionDictionary){
             if(pair.Key.CurrenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate)
-                moveCount++;
+                SimpleManipulateStateFrame++;
         }
 
-        if(moveCount==0) {
-            foreach (var pair in posDict)
+        if(SimpleManipulateStateFrame==0) {
+            foreach (var pair in ObjectPositionDictionary)
             {
                 pair.Key.isNonTargetObject = false;
             }
             return;
         }
-        
-        foreach (var pair in posDict){
-            foreach (var pair2 in posDict){
+
+        foreach (var pair in ObjectPositionDictionary){
+            foreach (var pair2 in ObjectPositionDictionary){
                 
                 if(pair.Key.CurrenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate
                    && pair2.Key.CurrenInteractionState != InteractionStateAwareBlending.InteractionState.SimpleManipulate
                    && pair2.Key.CurrenInteractionState != InteractionStateAwareBlending.InteractionState.ComplexManipulate) {
                     
-                    // float distance = Vector3.Distance(pair.Key.boundingBox.transform.position, pair2.Key.boundingBox.transform.position);
                     float distance = MeasureShortestDistance(pair.Key.BoundaryBox, pair2.Key.BoundaryBox);
-                    if(distance < obstacleDistThr){
+                    if(distance < AvoidStateDistance){
                         pair2.Key.isNonTargetObject = true;
                     }
                     else{
@@ -66,11 +58,11 @@ public class SetObstacle : MonoBehaviour
         }
     }
 
-    float MeasureShortestDistance(GameObject targetObject, GameObject obstacle){
+    float MeasureShortestDistance(GameObject targetObject, GameObject nonTargetObject){
         Vector3 targetCenter = targetObject.transform.position;
-        Vector3 obstacleCenter = obstacle.transform.position;
+        Vector3 obstacleCenter = nonTargetObject.transform.position;
         BoxCollider targetCollider = targetObject.GetComponent<BoxCollider>();
-        BoxCollider obstacleCollider = obstacle.GetComponent<BoxCollider>();
+        BoxCollider obstacleCollider = nonTargetObject.GetComponent<BoxCollider>();
 
         float centerToCenter = Vector3.Distance(targetCenter, obstacleCenter);
         Vector3 tmpPoint1 = obstacleCollider.ClosestPoint(targetCenter);
