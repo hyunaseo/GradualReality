@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetObstacle : MonoBehaviour
+public class SetNonTargetObject : MonoBehaviour
 {
     Dictionary<InteractionStateAwareBlending, Vector3> ObjectPositionDictionary = new Dictionary<InteractionStateAwareBlending, Vector3>();
 
