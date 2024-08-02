@@ -4,16 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
- 
+
 /// <summary>
 ///  This script is attached to each object and tracks its interactin state.
 /// </summary>
 public class InteractionStateAwareBlending : MonoBehaviour
 {
-    GradualRealityManager GRManager; // GradualReality Manager to obtain parameters
+    private GradualRealityManager GRManager; // GradualReality Manager to obtain parameters
 
     #region Interaction States
-    
+
+    // Enum to represent interaction states of GradualReailty 
     public enum InteractionState
     {
         Perceive,
@@ -82,10 +83,28 @@ public class InteractionStateAwareBlending : MonoBehaviour
 
     void Start()
     {
+        InitializeReferences();
+        InitializeComponents();
+        PriorPosition = transform.position;
+    }
+
+    void Update()
+    {
+
+        UpdateThresholds();
+        TrackInteractionState();
+        RenderBlendingMethods();
+        EnableTrackerRendering();
+    }
+
+    private void InitializeReferences()
+    {
         GRManager = GameObject.FindObjectOfType<GradualRealityManager>();
         Tracker = transform.GetChild(0).GetChild(0).gameObject;
-        PriorPosition = transform.position;
+    }
 
+    private void InitializeComponents()
+    {
         // Find the corresponding blending methods 
         foreach (Transform child in Tracker.transform)
         {
@@ -94,7 +113,6 @@ public class InteractionStateAwareBlending : MonoBehaviour
             if (child.tag == "BoundaryBox")
                 BoundaryBox = child.gameObject;
         }
-
 
         // Affordance Contour setting
         AffordanceContourRenderer = AffordanceContour.transform.GetChild(0).GetComponentInChildren<MeshRenderer>();
@@ -117,16 +135,34 @@ public class InteractionStateAwareBlending : MonoBehaviour
         buttonRenderers[0] = interactionButtonCore.GetComponent<MeshRenderer>();
     }
 
-    void Update()
+    private void UpdateThresholds()
     {
         // Retrieve threholds 
         TrackingErrorThreshold = GRManager.TrackingErrorThreshold;
         MovementDetectionFrameWindow = GRManager.MovementDetectionFrameWindow;
         ComplexManipulateStateFrameWindow = GRManager.ComplexManipulateStateFrameWindow;
+    }
 
-        // Track interaction state and update CurrentInteractionState
-        TrackInteractionState();
+    private void TrackInteractionState()
+    {
+        // Update the boolean values for the interaction state based on the input data
+        isApproachStateOn = PassThrough.isPrimaryHovered || PassThrough.isHovered;
 
+        if (isTargetObjectMoving()) isSimpleManipulateStateOn = true;
+
+        isComplexManipulateStateOn = interactionButton.isPressed;
+        if (isComplexManipulateStateOn) isHandInPassThroughArea = true;
+
+        // Set CurrentInteractionState 
+        if (isComplexManipulateStateOn || isHandInPassThroughArea) CurrenInteractionState = InteractionState.ComplexManipulate;
+        else if (isSimpleManipulateStateOn) CurrenInteractionState = InteractionState.SimpleManipulate;
+        else if (isApproachStateOn) CurrenInteractionState = InteractionState.Approach;
+        else if (isNonTargetObject) CurrenInteractionState = InteractionState.Avoid;
+        else CurrenInteractionState = InteractionState.Perceive;
+    }
+
+    private void RenderBlendingMethods()
+    {
         // Select blending method for CurrentInteractionState
         switch (CurrenInteractionState)
         {
@@ -150,27 +186,14 @@ public class InteractionStateAwareBlending : MonoBehaviour
                 RenderBoundaryBox();
                 break;
         }
-
-        if (isTrackerRenderingEnabled)
-            TrackerRenderer.enabled = true;
     }
 
-    void TrackInteractionState()
+    private void EnableTrackerRendering()
     {
-        // Update the boolean values for the interaction state based on the input data
-        isApproachStateOn = PassThrough.isPrimaryHovered || PassThrough.isHovered;
-        
-        if (isTargetObjectMoving()) isSimpleManipulateStateOn = true;
-        
-        isComplexManipulateStateOn = interactionButton.isPressed;
-        if (isComplexManipulateStateOn) isHandInPassThroughArea = true;
-        
-        // Set CurrentInteractionState 
-        if (isComplexManipulateStateOn || isHandInPassThroughArea) CurrenInteractionState = InteractionState.ComplexManipulate;
-        else if (isSimpleManipulateStateOn) CurrenInteractionState = InteractionState.SimpleManipulate;
-        else if (isApproachStateOn) CurrenInteractionState = InteractionState.Approach;
-        else if (isNonTargetObject) CurrenInteractionState = InteractionState.Avoid;
-        else CurrenInteractionState = InteractionState.Perceive; 
+        if (isTrackerRenderingEnabled)
+        {
+            TrackerRenderer.enabled = true;
+        }
     }
 
     void RenderVirtualProxy()
@@ -218,9 +241,15 @@ public class InteractionStateAwareBlending : MonoBehaviour
 
         AffordanceContourRenderer.enabled = false;
         buttonRenderers[0].enabled = false;
-        
-        if (PassThrough.isPrimaryHovered || PassThrough.isHovered) NoComplexManipulateStateFrame = 0;
-        else NoComplexManipulateStateFrame++;
+
+        if (PassThrough.isPrimaryHovered || PassThrough.isHovered)
+        {
+            NoComplexManipulateStateFrame = 0;
+        }
+        else
+        {
+            NoComplexManipulateStateFrame++;
+        }
 
         if (NoComplexManipulateStateFrame > ComplexManipulateStateFrameWindow)
         {
@@ -232,8 +261,9 @@ public class InteractionStateAwareBlending : MonoBehaviour
             isHandInPassThroughArea = true;
         }
     }
-    
-    public void RenderBoundaryBox(){
+
+    public void RenderBoundaryBox()
+    {
         BoundaryBoxRenderer.enabled = true;
         BoundaryBoxLineRenderer.enabled = true;
     }
