@@ -1,4 +1,4 @@
-# **GradualReality**
+# <span style="color: rgb(0, 255, 205);">**GradualReality**</span>
 ![Introduction](Figures/1.Introduction.png)
 
 **Authors**: [Hyuna Seo](https://hyunaseo.github.io), Juheon Yi, Rajesh Balan, Youngki Lee 
@@ -51,9 +51,9 @@ We implemented this project with Unity 2021.3.2f1.
 ## Code 
 This code is structured to execute GradualReality, encompassing the following key tasks:
 
-1. [**Initial Settings for cameras and hand tracking**](#initial-settings)
-2. [**GradualReality Settings for interaction states and blending methods**](#gradualreality-settings)
-3. **Object Settings for tracker assignment and physical object information**
+1. [Initial Settings](#initial-settings) for cameras and hand tracking
+2. [GradualReality Settings](#gradualreality-settings) for interaction states and blending methods
+3. [Object Settings](#object-settings) for tracker assignment and physical object information
 
 ## Initial Settings
 
@@ -86,8 +86,14 @@ There are three camera rigs for GradualRealtiy. Please add them to the scene as 
 Add your own virtual scenes and components for your amazing immersive experience!!!!
 
 ## GradualReality Settings 
-### 1. Set interaction state triggering parameters and blending methods options 
-1. Add `Assets/Prefabs/GradualReality` to the scene, and set its rotation as (0, 90, 0). The `GradualReality` prefab consists of a total of 3 components as below. 
+### 1. Set GradualReality prefab
+Add `Assets/Prefabs/GradualReality` to the scene, and set its rotation as (0, 90, 0). The `GradualReality` prefab consists of a total of 3 components as below. 
     - `GradualReality Manager`: You can set detailed parameteres of GradualReality from this.
     - `Initialize Camera Rigs`: Since the rendering order changes according to the active status of the camera rigs, you must manually connect the `Zed Camera Rig` and `Main Camera Rig` in the inspector using this script. 
     - (Optional) `Zoom Field Of View`: This resolves issues arising from the different FoVs of the ZED mini and VR HMD. This is not mandatory; for more details, please refer to the comments within the script.
+
+
+
+## Object Settings 
+### 1. Get tracker serial numbers
+To map the tracker of physical object with the virtual proxy, you should know the tracker's serial numbers. 

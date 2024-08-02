@@ -10,11 +10,11 @@ using Valve.VR;
 /// </summary>
 public class GetTrackerSerialNumbers : MonoBehaviour
 {
-    public Dictionary<string, int> serial_id_Dict = new Dictionary<string, int>();
+    public Dictionary<string, int> SerialNumberIDDictionary = new Dictionary<string, int>();
     
     void Start()
     {
-        ListDeviceSerialNumbers(serial_id_Dict);
+        ListDeviceSerialNumbers(SerialNumberIDDictionary);
     }
 
     public void ListDeviceSerialNumbers(Dictionary<string, int> serial_id_Dict)
@@ -31,9 +31,9 @@ public class GetTrackerSerialNumbers : MonoBehaviour
             OpenVR.System.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_ModelNumber_String, sb, OpenVR.k_unMaxPropertyStringSize, ref error);
             var ModelNumber = sb.ToString();
 
-            if (SerialNumber.Length > 0 || ModelNumber == "VIVE Tracker 3.0")
+            if (SerialNumber.Length > 0 && ModelNumber == "VIVE Tracker 3.0")
             {
-                Debug.Log("Device " + i.ToString() + " = " + SerialNumber + " | " + ModelNumber);
+                Debug.Log("Object Setting Step 1. VIVE Tracker 3.0 device number " + i.ToString() + ": serial number " + SerialNumber);
                 serial_id_Dict.Add(SerialNumber, i);
             }
         }
