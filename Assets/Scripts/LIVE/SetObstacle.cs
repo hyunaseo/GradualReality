@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SetObstacle : MonoBehaviour
 {
-    Dictionary<RenderPipeline, Vector3> posDict = new Dictionary<RenderPipeline, Vector3>();
+    Dictionary<InteractionStateAwareBlending, Vector3> posDict = new Dictionary<RenderPipeline, Vector3>();
 
     //Set Thresholds
     GradualRealityManager initParams;
@@ -17,7 +17,7 @@ public class SetObstacle : MonoBehaviour
     {
         for(int i=0; i<transform.childCount; i++){
             Transform child = transform.GetChild(i);
-            if(child.gameObject.activeSelf) posDict.Add(child.GetComponent<RenderPipeline>(), child.position);
+            if(child.gameObject.activeSelf) posDict.Add(child.GetComponent<InteractionStateAwareBlending>(), child.position);
         }
 
         initParams = GameObject.FindObjectOfType<GradualRealityManager>();
@@ -34,7 +34,7 @@ public class SetObstacle : MonoBehaviour
         int moveCount = 0;
 
         foreach(var pair in posDict){
-            if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.Avoid)
+            if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.SimpleManipulate)
                 moveCount++;
         }
 
@@ -49,8 +49,8 @@ public class SetObstacle : MonoBehaviour
         foreach (var pair in posDict){
             foreach (var pair2 in posDict){
                 
-                if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.Avoid
-                   && pair2.Key.CurrenInteractionState != RenderPipeline.InteractionState.Avoid
+                if(pair.Key.CurrenInteractionState == RenderPipeline.InteractionState.SimpleManipulate
+                   && pair2.Key.CurrenInteractionState != RenderPipeline.InteractionState.SimpleManipulate
                    && pair2.Key.CurrenInteractionState != RenderPipeline.InteractionState.ComplexManipulate) {
                     
                     // float distance = Vector3.Distance(pair.Key.boundingBox.transform.position, pair2.Key.boundingBox.transform.position);

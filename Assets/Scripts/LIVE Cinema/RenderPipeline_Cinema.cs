@@ -75,7 +75,7 @@ public class RenderPipeline_Cinema : MonoBehaviour
 
     //For Cinema Scenario
     GameObject popcornContainer;
-    RenderPipeline.InteractionState containerState;
+    InteractionStateAwareBlending.InteractionState containerState;
 
     void Start()
     {
@@ -165,7 +165,7 @@ public class RenderPipeline_Cinema : MonoBehaviour
             currenInteractionState = InteractionState.Perceive;
         else if(containerState == RenderPipeline.InteractionState.Approach)
             currenInteractionState = InteractionState.Grab;
-        else if(containerState == RenderPipeline.InteractionState.Avoid)
+        else if(containerState == RenderPipeline.InteractionState.SimpleManipulate)
             currenInteractionState = InteractionState.Grab;
         else currenInteractionState = InteractionState.Perceive;
 

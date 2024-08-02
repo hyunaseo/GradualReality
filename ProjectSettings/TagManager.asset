@@ -10,8 +10,8 @@ TagManager:
   - zomBunny
   - Tracker
   - VirtualProxy
-  - Affordance
-  - BoundingBox
+  - AffordanceContour
+  - BoundaryBox
   layers:
   - Default
   - TransparentFX

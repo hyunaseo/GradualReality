@@ -8,7 +8,7 @@ using UnityEngine.Events;
 /// <summary>
 ///  This script is attached to each object and tracks its interactin state.
 /// </summary>
-public class RenderPipeline : MonoBehaviour
+public class InteractionStateAwareBlending : MonoBehaviour
 {
     GradualRealityManager GRManager; // GradualReality Manager to obtain parameters
 
@@ -24,7 +24,22 @@ public class RenderPipeline : MonoBehaviour
     }
 
     public InteractionState CurrenInteractionState = InteractionState.Perceive;
-    
+
+    //Booleans for Interaction State Tracking
+    bool isApproachStateOn = false;
+
+    bool isSimpleManipulateStateOn = false;
+    int NoMovementDetectionFrame;
+    int MovementDetectionFrameWindow;
+
+    bool isComplexManipulateStateOn = false;
+    int NoComplexManipulateStateFrame;
+    int ComplexManipulateStateFrameWindow;
+    bool isHandInPassThroughArea = false;
+
+    [HideInInspector]
+    public bool isNonTargetObject = false;
+
     #endregion
 
 
@@ -48,32 +63,22 @@ public class RenderPipeline : MonoBehaviour
     #endregion
 
 
+    #region Trackers and Virtual Buttons
+
+    public bool isTrackerRenderingEnabled;
     GameObject Tracker; // VIVE Tracker 
     MeshRenderer TrackerRenderer;
+    float TrackingErrorThreshold;
 
     InteractionButton interactionButton; // Interactable button provided by leap motion SDK 
     GameObject interactionButtonCore;
     MeshRenderer[] buttonRenderers = new MeshRenderer[2];
 
-    //Booleans for Interaction State Tracking
-    bool isComplexManipulateStateOn = false;
-    bool isHandInPassThroughArea = false;
-    bool isApproachStateOn = false;
-    bool isTrackerPosChanged = false;
-    public bool isAvoidStateOn = false;
-    public bool isNonTargetObject = false;
+    #endregion
 
-    //Variables for manipulation state
-    public int handNotInCount = 0;
-    int ComplexManipulateStateFrameWindow;
 
-    //Variables for move state
-    List<GameObject> allTrackers = new List<GameObject>();
-    float TrackingErrorThreshold;
     Vector3 CurrentPosition;
     Vector3 PriorPosition;
-    public int notMoveCount = 0;
-    int MovementDetectionFrameWindow = 30;
 
     void Start()
     {
@@ -119,33 +124,35 @@ public class RenderPipeline : MonoBehaviour
         MovementDetectionFrameWindow = GRManager.MovementDetectionFrameWindow;
         ComplexManipulateStateFrameWindow = GRManager.ComplexManipulateStateFrameWindow;
 
+        // Track interaction state and update CurrentInteractionState
         TrackInteractionState();
 
+        // Select blending method for CurrentInteractionState
         switch (CurrenInteractionState)
         {
             case InteractionState.Perceive:
-                RenderPerceive();
+                RenderVirtualProxy();
                 break;
 
             case InteractionState.Approach:
-                RenderGrab();
+                RenderAffordanceContour_ApproachState();
                 break;
 
-            case InteractionState.Avoid:
-                RenderMove();
+            case InteractionState.SimpleManipulate:
+                RenderAffordanceContour_SimpleManipulateState();
                 break;
 
             case InteractionState.ComplexManipulate:
-                RenderManipulate();
+                RenderPassThrough();
+                break;
+
+            case InteractionState.Avoid:
+                RenderBoundaryBox();
                 break;
         }
 
-        if(isNonTargetObject) {
-            BoundaryBoxRenderer.enabled = true;
-            BoundaryBoxLineRenderer.enabled = true;
-        }
-
-        TrackerRenderer.enabled = true;
+        if (isTrackerRenderingEnabled)
+            TrackerRenderer.enabled = true;
     }
 
     void TrackInteractionState()
@@ -153,24 +160,21 @@ public class RenderPipeline : MonoBehaviour
         // Update the boolean values for the interaction state based on the input data
         isApproachStateOn = PassThrough.isPrimaryHovered || PassThrough.isHovered;
         
-        isTrackerPosChanged = isTrackerMoving();
-        if (isTrackerPosChanged) isAvoidStateOn = true;
+        if (isTargetObjectMoving()) isSimpleManipulateStateOn = true;
         
         isComplexManipulateStateOn = interactionButton.isPressed;
         if (isComplexManipulateStateOn) isHandInPassThroughArea = true;
         
         // Set CurrentInteractionState 
         if (isComplexManipulateStateOn || isHandInPassThroughArea) CurrenInteractionState = InteractionState.ComplexManipulate;
-        else if (isAvoidStateOn) CurrenInteractionState = InteractionState.Avoid;
+        else if (isSimpleManipulateStateOn) CurrenInteractionState = InteractionState.SimpleManipulate;
         else if (isApproachStateOn) CurrenInteractionState = InteractionState.Approach;
+        else if (isNonTargetObject) CurrenInteractionState = InteractionState.Avoid;
         else CurrenInteractionState = InteractionState.Perceive; 
     }
 
-    void RenderPerceive()
+    void RenderVirtualProxy()
     {
-        TrackerRenderer.enabled = false;
-        // virtualProxyRenderer.enabled = true;
-
         AffordanceContourRenderer.enabled = false;
         buttonRenderers[0].enabled = false;
         PassThroughRenderer.enabled = false;
@@ -182,60 +186,46 @@ public class RenderPipeline : MonoBehaviour
         }
     }
 
-    void RenderGrab()
+    void RenderAffordanceContour_ApproachState()
     {
-        TrackerRenderer.enabled = false;
         AffordanceContourRenderer.enabled = true;
         buttonRenderers[0].enabled = true;
 
         PassThroughRenderer.enabled = false;
     }
 
-    void RenderMove()
+    void RenderAffordanceContour_SimpleManipulateState()
     {
-        //Set Renderer Enable Status
-        TrackerRenderer.enabled = false;
-        // virtualProxyRenderer.enabled = true;
-        AffordanceContourRenderer.enabled = true;
+        RenderAffordanceContour_ApproachState();
 
-        buttonRenderers[0].enabled = true;
-        PassThroughRenderer.enabled = false;
+        if (isTargetObjectMoving()) NoMovementDetectionFrame = 0;
+        else NoMovementDetectionFrame++;
 
-        //Count Moving Frame
-        if (isTrackerMoving()) notMoveCount = 0;
-        else notMoveCount++;
-
-        //If not moving, turn off Box
-        if (notMoveCount > MovementDetectionFrameWindow)
+        if (NoMovementDetectionFrame > MovementDetectionFrameWindow)
         {
-            isAvoidStateOn = false;
-            notMoveCount = 0;
+            isSimpleManipulateStateOn = false;
+            NoMovementDetectionFrame = 0;
         }
         else
         {
-            isAvoidStateOn = true;
+            isSimpleManipulateStateOn = true;
         }
     }
 
-    public void RenderManipulate()
+    public void RenderPassThrough()
     {
-        //Set Renderer Enable Status
         PassThroughRenderer.enabled = true;
 
-        TrackerRenderer.enabled = false;
-        // virtualProxyRenderer.enabled = false;
         AffordanceContourRenderer.enabled = false;
         buttonRenderers[0].enabled = false;
         
-        //Count Hand In Frame #
-        if (isHandInSphere()) handNotInCount = 0;
-        else handNotInCount++;
+        if (PassThrough.isPrimaryHovered || PassThrough.isHovered) NoComplexManipulateStateFrame = 0;
+        else NoComplexManipulateStateFrame++;
 
-        //If Hand is not in, turn off PT
-        if (handNotInCount > ComplexManipulateStateFrameWindow)
+        if (NoComplexManipulateStateFrame > ComplexManipulateStateFrameWindow)
         {
             isHandInPassThroughArea = false;
-            handNotInCount = 0;
+            NoComplexManipulateStateFrame = 0;
         }
         else
         {
@@ -243,15 +233,15 @@ public class RenderPipeline : MonoBehaviour
         }
     }
     
-
-    bool isHandInSphere()
-    {
-        return isApproachStateOn;
+    public void RenderBoundaryBox(){
+        BoundaryBoxRenderer.enabled = true;
+        BoundaryBoxLineRenderer.enabled = true;
     }
 
-    bool isTrackerMoving()
+    bool isTargetObjectMoving()
     {
         CurrentPosition = transform.position;
+
         if (Vector3.Distance(CurrentPosition, PriorPosition) > TrackingErrorThreshold)
         {
             PriorPosition = CurrentPosition;

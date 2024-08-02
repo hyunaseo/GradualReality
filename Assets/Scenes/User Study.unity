@@ -891,11 +891,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrenInteractionState: 0
-  BoundaryBox: {fileID: 0}
-  isMoving: 0
   isNonTargetObject: 0
-  handNotInCount: 0
-  notMoveCount: 0
+  BoundaryBox: {fileID: 0}
+  isTrackerRenderingEnabled: 0
 --- !u!205 &113518755964033338
 LODGroup:
   m_ObjectHideFlags: 0
@@ -4930,7 +4928,7 @@ GameObject:
   - component: {fileID: 2173292797529868367}
   - component: {fileID: 3881593988869982562}
   - component: {fileID: 4693321741589512938}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ContainerVirtualProxy
   m_TagString: VirtualProxy
   m_Icon: {fileID: 0}
@@ -7460,11 +7458,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrenInteractionState: 0
-  BoundaryBox: {fileID: 0}
-  isMoving: 0
   isNonTargetObject: 0
-  handNotInCount: 0
-  notMoveCount: 0
+  BoundaryBox: {fileID: 0}
+  isTrackerRenderingEnabled: 0
 --- !u!114 &4121529643033792224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7478,11 +7474,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrenInteractionState: 0
-  BoundaryBox: {fileID: 0}
-  isMoving: 0
   isNonTargetObject: 0
-  handNotInCount: 0
-  notMoveCount: 0
+  BoundaryBox: {fileID: 0}
+  isTrackerRenderingEnabled: 0
 --- !u!114 &4121529643367983010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7496,11 +7490,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrenInteractionState: 0
-  BoundaryBox: {fileID: 0}
-  isMoving: 0
   isNonTargetObject: 0
-  handNotInCount: 0
-  notMoveCount: 0
+  BoundaryBox: {fileID: 0}
+  isTrackerRenderingEnabled: 0
 --- !u!114 &4121529643381548312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7514,11 +7506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrenInteractionState: 0
-  BoundaryBox: {fileID: 0}
-  isMoving: 0
   isNonTargetObject: 0
-  handNotInCount: 0
-  notMoveCount: 0
+  BoundaryBox: {fileID: 0}
+  isTrackerRenderingEnabled: 0
 --- !u!114 &4121529643485432523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7532,11 +7522,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrenInteractionState: 0
-  BoundaryBox: {fileID: 0}
-  isMoving: 0
   isNonTargetObject: 0
-  handNotInCount: 0
-  notMoveCount: 0
+  BoundaryBox: {fileID: 0}
+  isTrackerRenderingEnabled: 0
 --- !u!114 &4121529644372799149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7550,11 +7538,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrenInteractionState: 0
-  BoundaryBox: {fileID: 0}
-  isMoving: 0
   isNonTargetObject: 0
-  handNotInCount: 0
-  notMoveCount: 0
+  BoundaryBox: {fileID: 0}
+  isTrackerRenderingEnabled: 0
 --- !u!65 &4125747980903479101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9324,7 +9310,7 @@ GameObject:
   - component: {fileID: 101934886411019050}
   m_Layer: 13
   m_Name: MugBox
-  m_TagString: BoundingBox
+  m_TagString: BoundaryBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11548,7 +11534,7 @@ GameObject:
   - component: {fileID: 8024232267053343256}
   m_Layer: 12
   m_Name: ContainerAffordance
-  m_TagString: Affordance
+  m_TagString: AffordanceContour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
