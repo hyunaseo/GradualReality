@@ -36,7 +36,12 @@ public class GradualRealityManager : MonoBehaviour
     public float TrackingErrorThreshold = 0.005f;
     [HideInInspector]
     public int MovementDetectionFrameWindow = 30;
- 
+
+    // [Header("Others")]
+
+    // [Tooltip("Check if you want to render the tracker")]
+    // public bool TrackerRenderingEnabled;
+    // public Material TrackerMaterial; 
 
     void Update()
     {

@@ -24,18 +24,18 @@ public class InteractionStateAwareBlending : MonoBehaviour
         Avoid
     }
 
-    public InteractionState CurrenInteractionState = InteractionState.Perceive;
+    public InteractionState currenInteractionState = InteractionState.Perceive;
 
     //Booleans for Interaction State Tracking
     bool isApproachStateOn = false;
 
     bool isSimpleManipulateStateOn = false;
-    int NoMovementDetectionFrame;
-    int MovementDetectionFrameWindow;
+    int noMovementDetectionFrame;
+    int movementDetectionFrameWindow;
 
     bool isComplexManipulateStateOn = false;
-    int NoComplexManipulateStateFrame;
-    int ComplexManipulateStateFrameWindow;
+    int noComplexManipulateStateFrame;
+    int complexManipulateStateFrameWindow;
     bool isHandInPassThroughArea = false;
 
     [HideInInspector]
@@ -47,29 +47,28 @@ public class InteractionStateAwareBlending : MonoBehaviour
     #region Blending Methods
 
     // Affordance Contour 
-    GameObject AffordanceContour;
-    MeshRenderer AffordanceContourRenderer;
+    GameObject affordanceContour;
+    MeshRenderer affordanceContourRenderer;
 
     // Boundary Box
     [HideInInspector]
-    public GameObject BoundaryBox;
-    MeshRenderer BoundaryBoxRenderer;
-    LineRenderer BoundaryBoxLineRenderer = new LineRenderer();
+    public GameObject boundaryBox;
+    MeshRenderer boundaryBoxRenderer;
+    LineRenderer boundaryBoxLineRenderer = new LineRenderer();
 
     // Pass-Through 
-    InteractionBehaviour PassThrough;
-    GameObject PassThroughEllipsoid;
-    MeshRenderer PassThroughRenderer;
+    InteractionBehaviour passThrough;
+    GameObject passThroughEllipsoid;
+    MeshRenderer passThroughRenderer;
 
     #endregion
 
 
     #region Trackers and Virtual Buttons
 
-    public bool isTrackerRenderingEnabled;
-    GameObject Tracker; // VIVE Tracker 
-    MeshRenderer TrackerRenderer;
-    float TrackingErrorThreshold;
+    GameObject tracker; // VIVE Tracker 
+    // MeshRenderer trackerRenderer;
+    // float trackingErrorThreshold; 
 
     InteractionButton interactionButton; // Interactable button provided by leap motion SDK 
     GameObject interactionButtonCore;
@@ -78,14 +77,14 @@ public class InteractionStateAwareBlending : MonoBehaviour
     #endregion
 
 
-    Vector3 CurrentPosition;
-    Vector3 PriorPosition;
+    Vector3 currentPosition;
+    Vector3 priorPosition;
 
     void Start()
     {
         InitializeReferences();
         InitializeComponents();
-        PriorPosition = transform.position;
+        priorPosition = transform.position;
     }
 
     void Update()
@@ -100,37 +99,39 @@ public class InteractionStateAwareBlending : MonoBehaviour
     private void InitializeReferences()
     {
         GRManager = GameObject.FindObjectOfType<GradualRealityManager>();
-        Tracker = transform.GetChild(0).GetChild(0).gameObject;
+        tracker = transform.GetChild(0).GetChild(0).gameObject;
     }
 
     private void InitializeComponents()
     {
         // Find the corresponding blending methods 
-        foreach (Transform child in Tracker.transform)
+        foreach (Transform child in tracker.transform)
         {
             if (child.tag == "AffordanceContour")
-                AffordanceContour = child.gameObject;
+                affordanceContour = child.gameObject;
             if (child.tag == "BoundaryBox")
-                BoundaryBox = child.gameObject;
+                boundaryBox = child.gameObject;
         }
 
         // Affordance Contour setting
-        AffordanceContourRenderer = AffordanceContour.transform.GetChild(0).GetComponentInChildren<MeshRenderer>();
+        affordanceContourRenderer = affordanceContour.transform.GetChild(0).GetComponentInChildren<MeshRenderer>();
+        affordanceContourRenderer.material = GRManager.AffordanceContourMaterial;
 
         // Boundary Box setting 
-        BoundaryBoxRenderer = BoundaryBox.GetComponent<MeshRenderer>();
-        BoundaryBoxLineRenderer = BoundaryBox.GetComponent<LineRenderer>();
-        BoundaryBoxRenderer.enabled = false;
-        BoundaryBoxLineRenderer.enabled = false;
+        boundaryBoxRenderer = boundaryBox.GetComponent<MeshRenderer>();
+        boundaryBoxLineRenderer = boundaryBox.GetComponent<LineRenderer>();
+        boundaryBoxRenderer.enabled = false;
+        boundaryBoxLineRenderer.enabled = false;
 
         // Pass-Through setting 
-        PassThrough = Tracker.transform.Find("PassThroughSphere Node").GetComponent<InteractionBehaviour>();
-        PassThroughEllipsoid = PassThrough.transform.GetChild(0).gameObject;
-        PassThroughRenderer = PassThroughEllipsoid.GetComponent<MeshRenderer>();
+        passThrough = tracker.transform.Find("PassThroughSphere Node").GetComponent<InteractionBehaviour>();
+        passThroughEllipsoid = passThrough.transform.GetChild(0).gameObject;
+        passThroughRenderer = passThroughEllipsoid.GetComponent<MeshRenderer>();
 
         // Default mesh renderer Setting
-        TrackerRenderer = Tracker.GetComponent<MeshRenderer>();
-        interactionButton = Tracker.transform.Find("Button").Find("Cube UI Button").GetComponent<InteractionButton>();
+        // trackerRenderer = tracker.GetComponent<MeshRenderer>();
+        // trackerRenderer.material = GRManager.TrackerMaterial;
+        interactionButton = tracker.transform.Find("Button").Find("Cube UI Button").GetComponent<InteractionButton>();
         interactionButtonCore = interactionButton.transform.GetChild(0).GetChild(0).gameObject;
         buttonRenderers[0] = interactionButtonCore.GetComponent<MeshRenderer>();
     }
@@ -138,15 +139,15 @@ public class InteractionStateAwareBlending : MonoBehaviour
     private void UpdateThresholds()
     {
         // Retrieve threholds 
-        TrackingErrorThreshold = GRManager.TrackingErrorThreshold;
-        MovementDetectionFrameWindow = GRManager.MovementDetectionFrameWindow;
-        ComplexManipulateStateFrameWindow = GRManager.ComplexManipulateStateFrameWindow;
+        trackingErrorThreshold = GRManager.TrackingErrorThreshold;
+        movementDetectionFrameWindow = GRManager.MovementDetectionFrameWindow;
+        complexManipulateStateFrameWindow = GRManager.ComplexManipulateStateFrameWindow;
     }
 
     private void TrackInteractionState()
     {
         // Update the boolean values for the interaction state based on the input data
-        isApproachStateOn = PassThrough.isPrimaryHovered || PassThrough.isHovered;
+        isApproachStateOn = passThrough.isPrimaryHovered || passThrough.isHovered;
 
         if (isTargetObjectMoving()) isSimpleManipulateStateOn = true;
 
@@ -154,17 +155,17 @@ public class InteractionStateAwareBlending : MonoBehaviour
         if (isComplexManipulateStateOn) isHandInPassThroughArea = true;
 
         // Set CurrentInteractionState 
-        if (isComplexManipulateStateOn || isHandInPassThroughArea) CurrenInteractionState = InteractionState.ComplexManipulate;
-        else if (isSimpleManipulateStateOn) CurrenInteractionState = InteractionState.SimpleManipulate;
-        else if (isApproachStateOn) CurrenInteractionState = InteractionState.Approach;
-        else if (isNonTargetObject) CurrenInteractionState = InteractionState.Avoid;
-        else CurrenInteractionState = InteractionState.Perceive;
+        if (isComplexManipulateStateOn || isHandInPassThroughArea) currenInteractionState = InteractionState.ComplexManipulate;
+        else if (isSimpleManipulateStateOn) currenInteractionState = InteractionState.SimpleManipulate;
+        else if (isApproachStateOn) currenInteractionState = InteractionState.Approach;
+        else if (isNonTargetObject) currenInteractionState = InteractionState.Avoid;
+        else currenInteractionState = InteractionState.Perceive;
     }
 
     private void RenderBlendingMethods()
     {
         // Select blending method for CurrentInteractionState
-        switch (CurrenInteractionState)
+        switch (currenInteractionState)
         {
             case InteractionState.Perceive:
                 RenderVirtualProxy();
@@ -190,44 +191,44 @@ public class InteractionStateAwareBlending : MonoBehaviour
 
     private void EnableTrackerRendering()
     {
-        if (isTrackerRenderingEnabled)
-        {
-            TrackerRenderer.enabled = true;
-        }
+        // if (GRManager.TrackerRenderingEnabled)
+        // {
+        //     trackerRenderer.enabled = true;
+        // }
     }
 
     void RenderVirtualProxy()
     {
-        AffordanceContourRenderer.enabled = false;
+        affordanceContourRenderer.enabled = false;
         buttonRenderers[0].enabled = false;
-        PassThroughRenderer.enabled = false;
+        passThroughRenderer.enabled = false;
 
         if (!isNonTargetObject)
         {
-            BoundaryBoxRenderer.enabled = false;
-            BoundaryBoxLineRenderer.enabled = false;
+            boundaryBoxRenderer.enabled = false;
+            boundaryBoxLineRenderer.enabled = false;
         }
     }
 
     void RenderAffordanceContour_ApproachState()
     {
-        AffordanceContourRenderer.enabled = true;
+        affordanceContourRenderer.enabled = true;
         buttonRenderers[0].enabled = true;
 
-        PassThroughRenderer.enabled = false;
+        passThroughRenderer.enabled = false;
     }
 
     void RenderAffordanceContour_SimpleManipulateState()
     {
         RenderAffordanceContour_ApproachState();
 
-        if (isTargetObjectMoving()) NoMovementDetectionFrame = 0;
-        else NoMovementDetectionFrame++;
+        if (isTargetObjectMoving()) noMovementDetectionFrame = 0;
+        else noMovementDetectionFrame++;
 
-        if (NoMovementDetectionFrame > MovementDetectionFrameWindow)
+        if (noMovementDetectionFrame > movementDetectionFrameWindow)
         {
             isSimpleManipulateStateOn = false;
-            NoMovementDetectionFrame = 0;
+            noMovementDetectionFrame = 0;
         }
         else
         {
@@ -237,24 +238,24 @@ public class InteractionStateAwareBlending : MonoBehaviour
 
     public void RenderPassThrough()
     {
-        PassThroughRenderer.enabled = true;
+        passThroughRenderer.enabled = true;
 
-        AffordanceContourRenderer.enabled = false;
+        affordanceContourRenderer.enabled = false;
         buttonRenderers[0].enabled = false;
 
-        if (PassThrough.isPrimaryHovered || PassThrough.isHovered)
+        if (passThrough.isPrimaryHovered || passThrough.isHovered)
         {
-            NoComplexManipulateStateFrame = 0;
+            noComplexManipulateStateFrame = 0;
         }
         else
         {
-            NoComplexManipulateStateFrame++;
+            noComplexManipulateStateFrame++;
         }
 
-        if (NoComplexManipulateStateFrame > ComplexManipulateStateFrameWindow)
+        if (noComplexManipulateStateFrame > complexManipulateStateFrameWindow)
         {
             isHandInPassThroughArea = false;
-            NoComplexManipulateStateFrame = 0;
+            noComplexManipulateStateFrame = 0;
         }
         else
         {
@@ -264,17 +265,17 @@ public class InteractionStateAwareBlending : MonoBehaviour
 
     public void RenderBoundaryBox()
     {
-        BoundaryBoxRenderer.enabled = true;
-        BoundaryBoxLineRenderer.enabled = true;
+        boundaryBoxRenderer.enabled = true;
+        boundaryBoxLineRenderer.enabled = true;
     }
 
     bool isTargetObjectMoving()
     {
-        CurrentPosition = transform.position;
+        currentPosition = transform.position;
 
-        if (Vector3.Distance(CurrentPosition, PriorPosition) > TrackingErrorThreshold)
+        if (Vector3.Distance(currentPosition, priorPosition) > trackingErrorThreshold)
         {
-            PriorPosition = CurrentPosition;
+            priorPosition = currentPosition;
             return true;
         }
 

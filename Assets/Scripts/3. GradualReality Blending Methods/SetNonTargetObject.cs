@@ -27,7 +27,7 @@ public class SetNonTargetObject : MonoBehaviour
         int SimpleManipulateStateFrame = 0;
 
         foreach(var pair in ObjectPositionDictionary){
-            if(pair.Key.CurrenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate)
+            if(pair.Key.currenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate)
                 SimpleManipulateStateFrame++;
         }
 
@@ -42,11 +42,11 @@ public class SetNonTargetObject : MonoBehaviour
         foreach (var pair in ObjectPositionDictionary){
             foreach (var pair2 in ObjectPositionDictionary){
                 
-                if(pair.Key.CurrenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate
-                   && pair2.Key.CurrenInteractionState != InteractionStateAwareBlending.InteractionState.SimpleManipulate
-                   && pair2.Key.CurrenInteractionState != InteractionStateAwareBlending.InteractionState.ComplexManipulate) {
+                if(pair.Key.currenInteractionState == InteractionStateAwareBlending.InteractionState.SimpleManipulate
+                   && pair2.Key.currenInteractionState != InteractionStateAwareBlending.InteractionState.SimpleManipulate
+                   && pair2.Key.currenInteractionState != InteractionStateAwareBlending.InteractionState.ComplexManipulate) {
                     
-                    float distance = MeasureShortestDistance(pair.Key.BoundaryBox, pair2.Key.BoundaryBox);
+                    float distance = MeasureShortestDistance(pair.Key.boundaryBox, pair2.Key.boundaryBox);
                     if(distance < AvoidStateDistance){
                         pair2.Key.isNonTargetObject = true;
                     }

@@ -228,6 +228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 792471342}
+  - component: {fileID: 792471343}
   m_Layer: 0
   m_Name: 'Boundary Box Settings '
   m_TagString: Untagged
@@ -250,6 +251,18 @@ Transform:
   m_Father: {fileID: 6527001250502005665}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &792471343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792471341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6abdef79cfa6de439f5ca2aa7cddd69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &29932230120461892
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,10 +827,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrenInteractionState: 0
+  currenInteractionState: 0
   isNonTargetObject: 0
-  BoundaryBox: {fileID: 0}
-  isTrackerRenderingEnabled: 0
+  boundaryBox: {fileID: 0}
 --- !u!205 &113518755964033338
 LODGroup:
   m_ObjectHideFlags: 0
@@ -3874,7 +3886,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 051f46c6ffdb01b47b7619f35ec0150f, type: 2}
+  - {fileID: 2100000, guid: 8ceec8036b0704443b1bfd993ef204a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6257,10 +6269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrenInteractionState: 0
+  currenInteractionState: 0
   isNonTargetObject: 0
-  BoundaryBox: {fileID: 0}
-  isTrackerRenderingEnabled: 0
+  boundaryBox: {fileID: 0}
 --- !u!114 &4121529643033792224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6273,10 +6284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrenInteractionState: 0
+  currenInteractionState: 0
   isNonTargetObject: 0
-  BoundaryBox: {fileID: 0}
-  isTrackerRenderingEnabled: 0
+  boundaryBox: {fileID: 0}
 --- !u!114 &4121529643367983010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6289,10 +6299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrenInteractionState: 0
+  currenInteractionState: 0
   isNonTargetObject: 0
-  BoundaryBox: {fileID: 0}
-  isTrackerRenderingEnabled: 0
+  boundaryBox: {fileID: 0}
 --- !u!114 &4121529643381548312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6305,10 +6314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrenInteractionState: 0
+  currenInteractionState: 0
   isNonTargetObject: 0
-  BoundaryBox: {fileID: 0}
-  isTrackerRenderingEnabled: 0
+  boundaryBox: {fileID: 0}
 --- !u!114 &4121529643485432523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6321,10 +6329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrenInteractionState: 0
+  currenInteractionState: 0
   isNonTargetObject: 0
-  BoundaryBox: {fileID: 0}
-  isTrackerRenderingEnabled: 0
+  boundaryBox: {fileID: 0}
 --- !u!114 &4121529644372799149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6337,10 +6344,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52c9ab0f0015c24982fd860f25cc6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrenInteractionState: 0
+  currenInteractionState: 0
   isNonTargetObject: 0
-  BoundaryBox: {fileID: 0}
-  isTrackerRenderingEnabled: 0
+  boundaryBox: {fileID: 0}
 --- !u!65 &4125747980903479101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9240,10 +9246,12 @@ MonoBehaviour:
   AvoidStateDistance: 0.15
   ComplexManipulateStateTime: 3
   ComplexManipulateStateFrameWindow: 0
-  AffordanceContourMaterial: {fileID: 0}
+  AffordanceContourMaterial: {fileID: 2100000, guid: 051f46c6ffdb01b47b7619f35ec0150f, type: 2}
   BoundaryBoxLineColor: {r: 0.025157154, g: 1, b: 0.8047811, a: 1}
   TrackingErrorThreshold: 0.005
   MovementDetectionFrameWindow: 30
+  TrackerRenderingEnabled: 1
+  TrackerMaterial: {fileID: 2100000, guid: 7433544ce803f854f827e6958b00b805, type: 2}
 --- !u!114 &6527001250502005680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9290,18 +9298,6 @@ Transform:
   m_Father: {fileID: 5471033070823230260}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6592201681752679408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6592201681752679423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6abdef79cfa6de439f5ca2aa7cddd69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6592201681752679422
 Transform:
   m_ObjectHideFlags: 0
@@ -9333,7 +9329,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6592201681752679422}
-  - component: {fileID: 6592201681752679408}
   m_Layer: 0
   m_Name: Vive Trackers
   m_TagString: Untagged
