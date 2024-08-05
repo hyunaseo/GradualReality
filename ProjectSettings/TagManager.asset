@@ -12,8 +12,7 @@ TagManager:
   - VirtualProxy
   - AffordanceContour
   - BoundaryBox
-  - Affordance
-  - BoundingBox
+  - PassThrough
   layers:
   - Default
   - TransparentFX

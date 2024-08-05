@@ -111,6 +111,8 @@ public class InteractionStateAwareBlending : MonoBehaviour
                 affordanceContour = child.gameObject;
             if (child.tag == "BoundaryBox")
                 boundaryBox = child.gameObject;
+            if (child.tag == "PassThrough")
+                passThrough = child.gameObject;
         }
 
         // Affordance Contour setting
@@ -124,7 +126,6 @@ public class InteractionStateAwareBlending : MonoBehaviour
         boundaryBoxLineRenderer.enabled = false;
 
         // Pass-Through setting 
-        passThrough = tracker.transform.Find("PassThroughSphere Node").GetComponent<InteractionBehaviour>();
         passThroughEllipsoid = passThrough.transform.GetChild(0).gameObject;
         passThroughRenderer = passThroughEllipsoid.GetComponent<MeshRenderer>();
 

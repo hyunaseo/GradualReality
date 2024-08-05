@@ -189,6 +189,38 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7247487050413869099, guid: 2df52875334f4a9428b373fb52d589e6, type: 3}
   m_PrefabInstance: {fileID: 3630911223842091951}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &405481266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405481267}
+  m_Layer: 0
+  m_Name: Virtual Proxy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405481267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405481266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2173292797529868367}
+  m_Father: {fileID: 8397135290564614827}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &455845083
 GameObject:
   m_ObjectHideFlags: 19
@@ -1173,7 +1205,7 @@ GameObject:
   - component: {fileID: 918844939455015288}
   - component: {fileID: 2304520741439442130}
   m_Layer: 0
-  m_Name: HandelFixed
+  m_Name: Container Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1489,12 +1521,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2411188464280800200}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0259, z: 0.0738}
-  m_LocalScale: {x: 0.13235918, y: 0.17817372, z: 0.19325912}
+  m_LocalPosition: {x: 0, y: -0.0259, z: 0.07380001}
+  m_LocalScale: {x: 0.13235918, y: 0.17817372, z: 0.19325915}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8397135290564614827}
-  m_RootOrder: 2
+  m_Father: {fileID: 405481267}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2179213078267669397
 Transform:
@@ -1674,7 +1706,7 @@ GameObject:
   - component: {fileID: 3881593988869982562}
   - component: {fileID: 4693321741589512938}
   m_Layer: 11
-  m_Name: ContainerVirtualProxy
+  m_Name: Container
   m_TagString: VirtualProxy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2310,8 +2342,8 @@ GameObject:
   - component: {fileID: 5800551083739112306}
   - component: {fileID: 8715862017797997485}
   m_Layer: 6
-  m_Name: PassThroughSphere Node
-  m_TagString: Untagged
+  m_Name: Pass-Through
+  m_TagString: PassThrough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3051,7 +3083,7 @@ GameObject:
   - component: {fileID: 2891178931517014438}
   - component: {fileID: 4997604904350608359}
   m_Layer: 6
-  m_Name: PassThroughSphere
+  m_Name: Pass-Through Ellipsoid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3410,7 +3442,7 @@ GameObject:
   - component: {fileID: 101934886411019061}
   - component: {fileID: 8524140240107196852}
   m_Layer: 13
-  m_Name: MugBox
+  m_Name: Boundary Box
   m_TagString: BoundaryBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4383,7 +4415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8024232267053343256}
   m_Layer: 12
-  m_Name: ContainerAffordance
+  m_Name: Affordance Contour
   m_TagString: AffordanceContour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4751,7 +4783,7 @@ Transform:
   m_Children:
   - {fileID: 8047482818581813577}
   m_Father: {fileID: 8397135290564614827}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &8047482818581813577
 Transform:
@@ -4948,9 +4980,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3939000930873013444}
-  - {fileID: 9029822129361881634}
-  - {fileID: 2173292797529868367}
+  - {fileID: 405481267}
   - {fileID: 8024232267053343256}
+  - {fileID: 9029822129361881634}
   - {fileID: 265171708921829434}
   m_Father: {fileID: 8310969843229839436}
   m_RootOrder: 0
@@ -5211,7 +5243,7 @@ Transform:
   m_Children:
   - {fileID: 54507439653312851}
   m_Father: {fileID: 8397135290564614827}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &9031696338721837051
 PrefabInstance:
