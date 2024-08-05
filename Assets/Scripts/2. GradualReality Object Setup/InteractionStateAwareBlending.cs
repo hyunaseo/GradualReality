@@ -112,7 +112,7 @@ public class InteractionStateAwareBlending : MonoBehaviour
             if (child.tag == "BoundaryBox")
                 boundaryBox = child.gameObject;
             if (child.tag == "PassThrough")
-                passThrough = child.gameObject;
+                passThrough = child.gameObject.GetComponent<InteractionBehaviour>();
         }
 
         // Affordance Contour setting
