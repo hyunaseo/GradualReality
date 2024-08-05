@@ -99,7 +99,7 @@ public class InteractionStateAwareBlending : MonoBehaviour
     private void InitializeReferences()
     {
         GRManager = GameObject.FindObjectOfType<GradualRealityManager>();
-        tracker = transform.GetChild(0).GetChild(0).gameObject;
+        tracker = transform.GetChild(0).gameObject;
     }
 
     private void InitializeComponents()
