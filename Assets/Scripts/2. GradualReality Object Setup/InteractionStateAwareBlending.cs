@@ -67,8 +67,8 @@ public class InteractionStateAwareBlending : MonoBehaviour
     #region Trackers and Virtual Buttons
 
     GameObject tracker; // VIVE Tracker 
-    // MeshRenderer trackerRenderer;
-    // float trackingErrorThreshold; 
+    MeshRenderer trackerRenderer;
+    float trackingErrorThreshold; 
 
     InteractionButton interactionButton; // Interactable button provided by leap motion SDK 
     GameObject interactionButtonCore;
@@ -129,7 +129,7 @@ public class InteractionStateAwareBlending : MonoBehaviour
         passThroughRenderer = passThroughEllipsoid.GetComponent<MeshRenderer>();
 
         // Default mesh renderer Setting
-        // trackerRenderer = tracker.GetComponent<MeshRenderer>();
+        trackerRenderer = tracker.GetComponent<MeshRenderer>();
         // trackerRenderer.material = GRManager.TrackerMaterial;
         interactionButton = tracker.transform.Find("Button").Find("Cube UI Button").GetComponent<InteractionButton>();
         interactionButtonCore = interactionButton.transform.GetChild(0).GetChild(0).gameObject;
