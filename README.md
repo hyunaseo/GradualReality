@@ -55,6 +55,8 @@ git clone https://github.com/hyunaseo/GradualReality.git
 
 9. Import GradualReality.unitypackage from the cloned repository into your Unity project.
 
+10. Open `Assets/Scenes/Gradual Reality Main Scene` and play. 
+
 <!-- 
 ## Code 
 This code is structured to execute GradualReality, encompassing the following key tasks:
@@ -63,7 +65,7 @@ This code is structured to execute GradualReality, encompassing the following ke
 2. [GradualReality Settings](#gradualreality-settings) for interaction states and blending methods
 3. [Object Settings](#object-settings) for tracker assignment and physical object information -->
 
-## Initial Settings
+## Physical Object Settings
 
 <!-- 
 ### 1. Set camera rigs
