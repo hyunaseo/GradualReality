@@ -25,6 +25,9 @@ Assets/*
 !Assets/Materials/**
 !Assets/Scenes/
 !Assets/Scenes/**
+!Assets/Editor/
+!Assets/Editor/**
+
 # Mono auto generated files
 mono_crash.*
 

@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 405481267}
   m_Layer: 0
   m_Name: Virtual Proxy
-  m_TagString: Untagged
+  m_TagString: VirtualProxy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1702,7 +1702,7 @@ GameObject:
   - component: {fileID: 4693321741589512938}
   m_Layer: 11
   m_Name: Container
-  m_TagString: VirtualProxy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2820,6 +2820,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1642515273246653039, guid: 129a9682e250807419ab95210f6b2f90, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035911537490911374, guid: 129a9682e250807419ab95210f6b2f90, type: 3}
+      propertyPath: _isEditing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930332419436415587, guid: 129a9682e250807419ab95210f6b2f90, type: 3}
+      propertyPath: FineTuning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930332419436415587, guid: 129a9682e250807419ab95210f6b2f90, type: 3}
+      propertyPath: DebugOptions
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5043,10 +5055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4949c524d63d2e4a8daf069dd4c52ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 6246673551717019196}
-  offsetX: 0
-  offsetY: 0
-  offsetZ: 0
 --- !u!4 &8862282652706754314
 Transform:
   m_ObjectHideFlags: 0

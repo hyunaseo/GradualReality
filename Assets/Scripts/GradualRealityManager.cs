@@ -10,7 +10,6 @@ using UnityEngine.Events;
 /// Originally, those are set following our paper, but you can modify it by yourself too!
 /// </summary>
 
-
 public class GradualRealityManager : MonoBehaviour
 {
     [Header("Interaction State Triggering Thresholds")]

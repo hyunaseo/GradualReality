@@ -65,7 +65,37 @@ This code is structured to execute GradualReality, encompassing the following ke
 2. [GradualReality Settings](#gradualreality-settings) for interaction states and blending methods
 3. [Object Settings](#object-settings) for tracker assignment and physical object information -->
 
-## Physical Object Settings
+## Object Settings
+This section outlines the step-by-step process for adding your own physical object to the virtual scene with the corresponding blending methods. 
+
+### Step 1: Get Tracker's Serial Number
+
+1. Open `Assets/Scenes/Object Registration Scene`.
+2. Connect the VIVE Tracker 3.0 to your PC.
+3. Activate only the `Get Tracker Serial Numbers` component on the `Object Setting` game object.
+4. Play the scene to obtain the tracker's serial number, which will be provided in the log starting with "Object Setting Step 1".
+
+### Step 2: Map Tracker to Your Object
+
+1. Activate only the `Map Tracker` component on the `Object Setting` game object.
+2. Enter (1) the serial number obtained in Step 1 and (2) the name of the object to be mapped.
+
+### Step 3: Add Your Object's Blending Methods
+
+1. Add the prefab located at `Assets/Prefabs/[Name Your Object]` as a child under the `Object Setting` in the scene, and then name it as you enter in Step 2.
+2. Add the necessary game objects as children of the Virtual Proxy and Affordance Contour game objects. Resize and position them appropriately.
+3. Measure the size of your physical object and enter these dimensions (in meters) for the Boundary Box and Pass-Through game objects.
+4. Adjust the position of the buttons as needed.
+
+### Step 4: Save Your `Object Setting` Prefab
+
+1. After adding all your objects under the `Object Setting` and completing the `Map Tracker` setup, rename `Object Setting` to `My Object Setting`.
+2. Save it as a prefab in `Assets/Prefabs`.
+
+### Step 5: Load Your `Object Setting` Prefab to the Main Scene
+
+1. Open `Assets/Scenes/Gradual Reality Main Scene`.
+2. Add the saved prefab from the previous step to this scene.
 
 <!-- 
 ### 1. Set camera rigs
