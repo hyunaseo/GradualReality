@@ -13,6 +13,8 @@ TagManager:
   - AffordanceContour
   - BoundaryBox
   - PassThrough
+  - BoundingBox
+  - Affordance
   layers:
   - Default
   - TransparentFX

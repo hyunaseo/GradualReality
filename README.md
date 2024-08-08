@@ -10,12 +10,7 @@
 ## Research project description
 We present **GradualReality** system that enables interaction with physical objects in the immersive virutal environment. Most prior work has relied on the Pass-Through technique, which excessively exposes real-world information in the virtual environment to support interaction. However, this causes an extreme trade-off between usability and immersion, deteriorating the user experience and hindering daily VR usage. To address this issue, we propose an **Interaction State-Aware Blending** approach for GradualReality system, which gradually blends real-world information in the virtual environment based on the current user's interaction context.
 
-## Main Features 
-
-## Prerequisites 
-We implemented this project with Unity 2021.3.2f1. 
-
-### Hardware Requirements
+## Hardware Requirements
 - HTC VIVE PRO 2
 - VIVE Tracker 3.0 for object tracking 
 - Leap Motion contorller 1 for hand tracking 
@@ -39,24 +34,38 @@ We implemented this project with Unity 2021.3.2f1.
 
 </details>
 
-### SDK Requirements
-- XR Plugin Management 4.3.1 
-- Steam VR Plugin 2.7.3 (sdk 1.14.15)
-- VIVE Input Utility 1.17.0
-- OpenVR XR Plugin 1.1.4 (Renference [link](https://docs.unity3d.com/Packages/com.unity.xr.management@4.3/manual/index.html).)
-- Zed Unity Plugin v3.8.0 (Download from this [link](https://www.stereolabs.com/en-kr/developers/release/3.8).)
-- Ultraleap Tracking 6.6.0 (Follow the instructions for setting up OpenUPM from [this link](https://github.com/ultraleap/UnityPlugin?tab=readme-ov-file#Installation).)
+## Installation 
+1. Clone this repository. 
+```bash
+git clone https://github.com/hyunaseo/GradualReality.git
+```
+2. Create a new Unity project using the 3D Built-in Render Pipeline with Unity Editor version 2021.3.2f1.
 
+3. Install XR Plugin Management through Edit -> Project Settings.
 
+4. In the Package Manager, import VIVE Input Utility 1.19.0 and SteamVR 2.7.3.
+
+5. In Project Settings -> Player -> Other Settings, set (1) Color Space to Gamma and (2) Allow downloads over HTTP to Always Allowed.
+
+6. In Project Settings -> XR Plugin Management, select OpenVR Loader and set Stereo Rendering Mode in OpenVR to Multi Pass.
+
+7. Download and import ZED SDK 3.8.0 from the provided [link](https://www.stereolabs.com/en-kr/developers/release/3.8).
+
+8. Follow the provided [link](https://github.com/ultraleap/UnityPlugin?tab=readme-ov-file#Installation) to install Ultraleap SDK using OpenUPM, then install Ultra Tracking version 6.6.0 from My Registries in the Package Manager.
+
+9. Import GradualReality.unitypackage from the cloned repository into your Unity project.
+
+<!-- 
 ## Code 
 This code is structured to execute GradualReality, encompassing the following key tasks:
 
 1. [Initial Settings](#initial-settings) for cameras and hand tracking
 2. [GradualReality Settings](#gradualreality-settings) for interaction states and blending methods
-3. [Object Settings](#object-settings) for tracker assignment and physical object information
+3. [Object Settings](#object-settings) for tracker assignment and physical object information -->
 
 ## Initial Settings
 
+<!-- 
 ### 1. Set camera rigs
 There are three camera rigs for GradualRealtiy. Please add them to the scene as follows. If you need more detailed explanation about the component settings, please refer to [this](./Assets/Prefabs/Camera%20Rigs).
 1. `Main Camera Rig` for Virtual Environment: Add `Assets/Prefabs/Camera Rigs/Main Camera Rig` to the scene, and set its rotation as (0, 90, 0). Make sure to set the `Main Camera Rig` and `all its child game objects` to **inactive** in the scene!
@@ -96,4 +105,4 @@ Add `Assets/Prefabs/GradualReality` to the scene, and set its rotation as (0, 90
 
 ## Object Settings 
 ### 1. Get tracker serial numbers
-To map the tracker of physical object with the virtual proxy, you should know the tracker's serial numbers. 
+To map the tracker of physical object with the virtual proxy, you should know the tracker's serial numbers.  -->
