@@ -1,0 +1,11 @@
+# Ignore all files
+*
+
+# Don't ignore unitypackage files
+!*.unitypackage
+
+# Don't ignore essential Git files
+!.gitignore
+!.gitattributes
+!.gitmodules
+

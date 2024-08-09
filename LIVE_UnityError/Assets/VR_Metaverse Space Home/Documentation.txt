@@ -1,0 +1,55 @@
+VR/Metaverse Space Home
+
+This package works only in Unity version 2020.2.2f1 and higher.
+If you need HDRP or URP version click on 'VR/Metaverse Space Home (HDRP).unitypackage' or 'VR/Metaverse Space Home (URP).unitypackage' in HDRP_URP_packages folder.
+
+VR/Metaverse Space Home environment with well designed, optimised, detailed interior, and one HDRI with stars and a planet.
+This environment was ment for VR, but it can be used in any project.
+
+LOD's used where appropriate.
+
+HDRI_Star_Sky - 2048x2048
+Leather - 1024x1024 (Mask, Normal Map)
+Walls - 2048x2048 (Albedo, Mask, Normal Map, Emissive)
+Gradient - 256x256 (Mask, Emissive)
+
+Chair_LOD0 - 3396 tris
+Chair_LOD1 - 1662 tris
+Chair_LOD2 - 830 tris
+Chair_LOD3 - 395 tris
+
+Couch_Collider - 193 tris
+Couch_LOD0 - 716 tris
+Couch_LOD1 - 242 tris
+Couch_LOD2 - 170 tris
+
+Lamp_LOD0 - 130 tris
+Lamp_LOD1 - 58 tris
+
+Table_Collider - 128 tris
+Table_LOD0 - 1568 tris
+Table_LOD1 - 752 tris
+Table_LOD2 - 400 tris
+
+Chess_table - 300 tris
+
+TV - 92 tris
+
+Design_part_Collider - 220 tris
+Design_part_Hologram - 112 tris
+Design_part_LOD0 - 1104 tris
+Design_part_LOD0 - 676 tris
+Design_part_LOD0 - 384 tris
+
+Base:
+Base - 6522 tris
+Collider - 570 tris
+Glass_01 - 124 tris
+Glass_01 - 108 tris
+Glass_01 - 56 tris
+Railing - 780 tris
+Railing_Collider - 94 tris
+Window_frames_01 - 1760 tris
+Window_frames_02 - 2160 tris
+Window_frames_03 - 864 tris
+Shadow_proxy - 524 tris
