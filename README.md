@@ -38,6 +38,8 @@ We present **GradualReality** system that enables interaction with physical obje
 1. Clone this repository. 
 ```bash
 git clone https://github.com/hyunaseo/GradualReality.git
+cd GradualReality 
+git lfs checkout
 ```
 2. Create a new Unity project using the 3D Built-in Render Pipeline with Unity Editor version 2021.3.2f1.
 
