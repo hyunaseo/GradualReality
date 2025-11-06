@@ -90,3 +90,15 @@ This section outlines the step-by-step process for adding your own physical obje
 
 1. Open `Assets/Scenes/Gradual Reality Main Scene`.
 2. Add the saved prefab from the previous step to this scene.
+
+## Citation
+If you find our work helpful, please consider citing:
+```
+@inproceedings{seo2024gradualreality,
+  title={Gradualreality: Enhancing physical object interaction in virtual reality via interaction state-aware blending},
+  author={Seo, HyunA and Yi, Juheon and Balan, Rajesh and Lee, Youngki},
+  booktitle={Proceedings of the 37th Annual ACM Symposium on User Interface Software and Technology},
+  pages={1--14},
+  year={2024}
+}
+```
